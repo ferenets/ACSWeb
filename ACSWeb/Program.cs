@@ -7,6 +7,8 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection; //added
+using ACSWeb.Data;
 
 namespace ACSWeb
 {
@@ -14,7 +16,28 @@ namespace ACSWeb
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+        //    BuildWebHost(args).Run();  //original
+
+            //--------- для ініціалізаці БД у разі її відсутності або пустоти
+            var host = BuildWebHost(args);
+
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var context = services.GetRequiredService<GTSContext>();
+                    DbInitializer.Initialize(context);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred while seeding the database.");
+                }
+            }
+
+            host.Run();
+            //---------------------------------------------------------------------
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
