@@ -11,6 +11,6 @@ namespace ACSWeb.Models
         public string Manufacturer { get; set; }
         public DateTime CommisioningDate { get; set; }
 
-        public GPA GPAs { get; set; }
+        public GPA GPA { get; set; }
     }
 }
