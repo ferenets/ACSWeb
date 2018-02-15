@@ -10,22 +10,22 @@ using ACSWeb.Models;
 
 namespace ACSWeb.Controllers
 {
-    public class KSController : Controller
+    public class PipelinesController : Controller
     {
         private readonly GTSContext _context;
 
-        public KSController(GTSContext context)
+        public PipelinesController(GTSContext context)
         {
             _context = context;
         }
 
-        // GET: KS
+        // GET: Pipelines
         public async Task<IActionResult> Index()
         {
-            return View(await _context.KSs.ToListAsync());
+            return View(await _context.Pipelines.ToListAsync());
         }
 
-        // GET: KS/Details/5
+        // GET: Pipelines/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var kS = await _context.KSs
+            var pipeline = await _context.Pipelines
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (kS == null)
+            if (pipeline == null)
             {
                 return NotFound();
             }
 
-            return View(kS);
+            return View(pipeline);
         }
 
-        // GET: KS/Create
+        // GET: Pipelines/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: KS/Create
+        // POST: Pipelines/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name")] KS kS)
+        public async Task<IActionResult> Create([Bind("ID,Name")] Pipeline pipeline)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(kS);
+                _context.Add(pipeline);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(kS);
+            return View(pipeline);
         }
 
-        // GET: KS/Edit/5
+        // GET: Pipelines/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var kS = await _context.KSs.SingleOrDefaultAsync(m => m.ID == id);
-            if (kS == null)
+            var pipeline = await _context.Pipelines.SingleOrDefaultAsync(m => m.ID == id);
+            if (pipeline == null)
             {
                 return NotFound();
             }
-            return View(kS);
+            return View(pipeline);
         }
 
-        // POST: KS/Edit/5
+        // POST: Pipelines/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] KS kS)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] Pipeline pipeline)
         {
-            if (id != kS.ID)
+            if (id != pipeline.ID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace ACSWeb.Controllers
             {
                 try
                 {
-                    _context.Update(kS);
+                    _context.Update(pipeline);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!KSExists(kS.ID))
+                    if (!PipelineExists(pipeline.ID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace ACSWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(kS);
+            return View(pipeline);
         }
 
-        // GET: KS/Delete/5
+        // GET: Pipelines/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var kS = await _context.KSs
+            var pipeline = await _context.Pipelines
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (kS == null)
+            if (pipeline == null)
             {
                 return NotFound();
             }
 
-            return View(kS);
+            return View(pipeline);
         }
 
-        // POST: KS/Delete/5
+        // POST: Pipelines/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var kS = await _context.KSs.SingleOrDefaultAsync(m => m.ID == id);
-            _context.KSs.Remove(kS);
+            var pipeline = await _context.Pipelines.SingleOrDefaultAsync(m => m.ID == id);
+            _context.Pipelines.Remove(pipeline);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool KSExists(int id)
+        private bool PipelineExists(int id)
         {
-            return _context.KSs.Any(e => e.ID == id);
+            return _context.Pipelines.Any(e => e.ID == id);
         }
     }
 }

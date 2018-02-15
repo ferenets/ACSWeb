@@ -12,8 +12,10 @@ namespace ACSWeb.Data
         public DbSet<UMG> UMGs { get; set; } //Имя DbSet а саме UMGs - имя таблиці БД
         public DbSet<LVU> LVUs { get; set; }
         public DbSet<KS> KSs { get; set; }
-        public DbSet<GPA> GPAs { get; set; }
+        public DbSet<GPA> GPAs { get; set; } 
         public DbSet<SAK> SAKs { get; set; }
+        public DbSet<SAKType> SAKTypes { get; set; }
+        public DbSet<Pipeline> Pipelines { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) //переопределим формирование ИМЕН таблиц БД на следующие:
         {
@@ -22,6 +24,8 @@ namespace ACSWeb.Data
             modelBuilder.Entity<KS>().ToTable("KS");
             modelBuilder.Entity<GPA>().ToTable("GPA");
             modelBuilder.Entity<SAK>().ToTable("SAK");
+            modelBuilder.Entity<SAKType>().ToTable("SAKType");
+            modelBuilder.Entity<Pipeline>().ToTable("Pipeline");
         }
 
 

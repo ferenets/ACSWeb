@@ -9,8 +9,10 @@ namespace ACSWeb.Models
         public string Name { get; set; }
         public string MTBase { get; set; }
         public string Manufacturer { get; set; }
-        public DateTime CommisioningDate { get; set; }
 
+        public string Seller { get; set; }
+        public DateTime CommisioningDate { get; set; }
         public GPA GPA { get; set; }
+        public SAKType SAKType { get; set; }
     }
 }

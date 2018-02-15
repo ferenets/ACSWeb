@@ -24,6 +24,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.StationNumber)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CompShopNumber)
+                </th>
             <th>
                 @Html.DisplayNameFor(model => model.SAK)
             </th>
@@ -44,6 +47,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StationNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompShopNumber)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SAK.ID)

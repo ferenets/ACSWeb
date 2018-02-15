@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ACSWeb.Models.SAK>
+﻿@model IEnumerable<ACSWeb.Models.Pipeline>
 
 @{
     ViewData["Title"] = "Index";
@@ -15,15 +15,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
-                <th>
-                    Матеріально-технічна база
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Manufacturer)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CommisioningDate)
-                </th>
             <th></th>
         </tr>
     </thead>
@@ -32,15 +23,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MTBase)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Manufacturer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CommisioningDate)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

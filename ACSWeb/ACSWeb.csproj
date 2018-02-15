@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <StartupObject>ACSWeb.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +18,5 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Views\KS\" />
   </ItemGroup>
 </Project>

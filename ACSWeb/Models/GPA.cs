@@ -10,7 +10,8 @@ namespace ACSWeb.Models
         public string GTDType { get; set; }
         public string VCNType { get; set; }
         public int StationNumber { get; set; }
-
+        public string CompShopNumber { get; set; }
+        //----------------------------------------------------------------------
         public KS KS { get; set; }
         public SAK SAK { get; set; }
     }

@@ -27,7 +27,7 @@ namespace ACSWeb
                 try
                 {
                     var context = services.GetRequiredService<GTSContext>();
-                    DbInitializer.Initialize(context);
+                    // DbInitializer.Initialize(context); //не пробовать инициализировать БД
                 }
                 catch (Exception ex)
                 {

@@ -7,8 +7,8 @@ namespace ACSWeb.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
-
         public LVU LVU { get; set; }
-        public ICollection<GPA> GPAs { get; set; }
+        public Pipeline Pipeline { get; set; }
+        public ICollection<GPA> GPAList { get; set; }
     }
 }

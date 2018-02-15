@@ -10,62 +10,62 @@ using ACSWeb.Models;
 
 namespace ACSWeb.Controllers
 {
-    public class SAKController : Controller
+    public class LVUsController : Controller
     {
         private readonly GTSContext _context;
 
-        public SAKController(GTSContext context)
+        public LVUsController(GTSContext context)
         {
             _context = context;
         }
 
-        // GET: SAK
-        public async Task<IActionResult> Index()    //считывание элементов таблицы SAK, и выдача во вью Index в виде списка
+        // GET: LVUs
+        public async Task<IActionResult> Index()
         {
-            return View(await _context.SAKs.ToListAsync());
+            return View(await _context.LVUs.ToListAsync());
         }
 
-        // GET: SAK/Details/5
+        // GET: LVUs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)  //если ничего не передалось
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var sakFroDetails = await _context.SAKs  // выбор всех саков в таблице
-                .SingleOrDefaultAsync(m => m.ID == id);  // фильтр из выбраных по ID
-            if (sakFroDetails == null)
+            var lVU = await _context.LVUs
+                .SingleOrDefaultAsync(m => m.ID == id);
+            if (lVU == null)
             {
-                return NotFound(); // ничего не нашло в БД
+                return NotFound();
             }
 
-            return View(sakFroDetails);  //возврат найденной САК
+            return View(lVU);
         }
 
-        // GET: SAK/Create
+        // GET: LVUs/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: SAK/Create
+        // POST: LVUs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,MTBase,Manufacturer,CommisioningDate")] SAK sAK)
+        public async Task<IActionResult> Create([Bind("ID,Name")] LVU lVU)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(sAK);
+                _context.Add(lVU);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(sAK);
+            return View(lVU);
         }
 
-        // GET: SAK/Edit/5
+        // GET: LVUs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var sakToEdit = await _context.SAKs.SingleOrDefaultAsync(m => m.ID == id);
-            if (sakToEdit == null)
+            var lVU = await _context.LVUs.SingleOrDefaultAsync(m => m.ID == id);
+            if (lVU == null)
             {
                 return NotFound();
             }
-            return View(sakToEdit);
+            return View(lVU);
         }
 
-        // POST: SAK/Edit/5
+        // POST: LVUs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,MTBase,Manufacturer,CommisioningDate")] SAK sAK)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] LVU lVU)
         {
-            if (id != sAK.ID)
+            if (id != lVU.ID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace ACSWeb.Controllers
             {
                 try
                 {
-                    _context.Update(sAK);
+                    _context.Update(lVU);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SAKExists(sAK.ID))
+                    if (!LVUExists(lVU.ID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace ACSWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(sAK);
+            return View(lVU);
         }
 
-        // GET: SAK/Delete/5
+        // GET: LVUs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var sAK = await _context.SAKs
+            var lVU = await _context.LVUs
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (sAK == null)
+            if (lVU == null)
             {
                 return NotFound();
             }
 
-            return View(sAK);
+            return View(lVU);
         }
 
-        // POST: SAK/Delete/5
+        // POST: LVUs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var sAK = await _context.SAKs.SingleOrDefaultAsync(m => m.ID == id);
-            _context.SAKs.Remove(sAK);
+            var lVU = await _context.LVUs.SingleOrDefaultAsync(m => m.ID == id);
+            _context.LVUs.Remove(lVU);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SAKExists(int id)
+        private bool LVUExists(int id)
         {
-            return _context.SAKs.Any(e => e.ID == id);
+            return _context.LVUs.Any(e => e.ID == id);
         }
     }
 }

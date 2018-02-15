@@ -1,4 +1,4 @@
-﻿@model ACSWeb.Models.SAK
+﻿@model ACSWeb.Models.UMG
 
 @{
     ViewData["Title"] = "Create";
@@ -6,7 +6,7 @@
 
 <h2>Create</h2>
 
-<h4>SAK</h4>
+<h4>UMG</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -18,19 +18,14 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MTBase" class="control-label"></label>
-                <input asp-for="MTBase" class="form-control" />
-                <span asp-validation-for="MTBase" class="text-danger"></span>
+                <label asp-for="ShortName" class="control-label"></label>
+                <input asp-for="ShortName" class="form-control" />
+                <span asp-validation-for="ShortName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Manufacturer" class="control-label"></label>
-                <input asp-for="Manufacturer" class="form-control" />
-                <span asp-validation-for="Manufacturer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CommisioningDate" class="control-label"></label>
-                <input asp-for="CommisioningDate" class="form-control" />
-                <span asp-validation-for="CommisioningDate" class="text-danger"></span>
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

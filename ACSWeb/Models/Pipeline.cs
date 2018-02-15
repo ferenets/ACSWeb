@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ACSWeb.Models
 {
-    public class LVU
+    public class Pipeline
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public UMG UMG { get; set; }
         public ICollection<KS> KSList { get; set; }
     }
 }
