@@ -22,13 +22,14 @@ namespace ACSWeb.Migrations
 
             modelBuilder.Entity("ACSWeb.Models.GPA", b =>
                 {
-                    b.Property<int>("ID");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("CompShopNumber");
 
                     b.Property<string>("GTDType");
 
-                    b.Property<int?>("KSID");
+                    b.Property<int>("KSID");
 
                     b.Property<int>("StationNumber");
 
@@ -48,11 +49,11 @@ namespace ACSWeb.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("LVUID");
+                    b.Property<int>("LVUID");
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("PipelineID");
+                    b.Property<int>("PipelineID");
 
                     b.HasKey("ID");
 
@@ -70,7 +71,7 @@ namespace ACSWeb.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("UMGID");
+                    b.Property<int>("UMGID");
 
                     b.HasKey("ID");
 
@@ -98,17 +99,22 @@ namespace ACSWeb.Migrations
 
                     b.Property<DateTime>("CommisioningDate");
 
+                    b.Property<int>("GPAID");
+
                     b.Property<string>("MTBase");
 
                     b.Property<string>("Manufacturer");
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("SAKTypeID");
+                    b.Property<int>("SAKTypeID");
 
                     b.Property<string>("Seller");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("GPAID")
+                        .IsUnique();
 
                     b.HasIndex("SAKTypeID");
 
@@ -145,39 +151,44 @@ namespace ACSWeb.Migrations
 
             modelBuilder.Entity("ACSWeb.Models.GPA", b =>
                 {
-                    b.HasOne("ACSWeb.Models.SAK", "SAK")
-                        .WithOne("GPA")
-                        .HasForeignKey("ACSWeb.Models.GPA", "ID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("ACSWeb.Models.KS", "KS")
                         .WithMany("GPAList")
-                        .HasForeignKey("KSID");
+                        .HasForeignKey("KSID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ACSWeb.Models.KS", b =>
                 {
                     b.HasOne("ACSWeb.Models.LVU", "LVU")
                         .WithMany("KSList")
-                        .HasForeignKey("LVUID");
+                        .HasForeignKey("LVUID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ACSWeb.Models.Pipeline", "Pipeline")
                         .WithMany("KSList")
-                        .HasForeignKey("PipelineID");
+                        .HasForeignKey("PipelineID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ACSWeb.Models.LVU", b =>
                 {
                     b.HasOne("ACSWeb.Models.UMG", "UMG")
                         .WithMany("VLUList")
-                        .HasForeignKey("UMGID");
+                        .HasForeignKey("UMGID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ACSWeb.Models.SAK", b =>
                 {
+                    b.HasOne("ACSWeb.Models.GPA", "GPA")
+                        .WithOne("SAK")
+                        .HasForeignKey("ACSWeb.Models.SAK", "GPAID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("ACSWeb.Models.SAKType", "SAKType")
                         .WithMany()
-                        .HasForeignKey("SAKTypeID");
+                        .HasForeignKey("SAKTypeID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

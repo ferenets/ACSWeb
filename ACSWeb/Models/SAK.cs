@@ -12,7 +12,13 @@ namespace ACSWeb.Models
 
         public string Seller { get; set; }
         public DateTime CommisioningDate { get; set; }
-        public GPA GPA { get; set; }
-        public SAKType SAKType { get; set; }
+
+        public int GPAID { get; set; }  //foreign key
+        public int SAKTypeID { get; set; } //foreign key
+
+
+        public SAKType SAKType { get; set; } //navigation property
+        public GPA GPA { get; set; } //navigation property
+
     }
 }

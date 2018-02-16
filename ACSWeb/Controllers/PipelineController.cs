@@ -10,22 +10,22 @@ using ACSWeb.Models;
 
 namespace ACSWeb.Controllers
 {
-    public class LVUsController : Controller
+    public class PipelineController : Controller
     {
         private readonly GTSContext _context;
 
-        public LVUsController(GTSContext context)
+        public PipelineController(GTSContext context)
         {
             _context = context;
         }
 
-        // GET: LVUs
+        // GET: Pipeline
         public async Task<IActionResult> Index()
         {
-            return View(await _context.LVUs.ToListAsync());
+            return View(await _context.Pipelines.ToListAsync());
         }
 
-        // GET: LVUs/Details/5
+        // GET: Pipeline/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var lVU = await _context.LVUs
+            var pipeline = await _context.Pipelines
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (lVU == null)
+            if (pipeline == null)
             {
                 return NotFound();
             }
 
-            return View(lVU);
+            return View(pipeline);
         }
 
-        // GET: LVUs/Create
+        // GET: Pipeline/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: LVUs/Create
+        // POST: Pipeline/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name")] LVU lVU)
+        public async Task<IActionResult> Create([Bind("ID,Name")] Pipeline pipeline)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(lVU);
+                _context.Add(pipeline);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(lVU);
+            return View(pipeline);
         }
 
-        // GET: LVUs/Edit/5
+        // GET: Pipeline/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var lVU = await _context.LVUs.SingleOrDefaultAsync(m => m.ID == id);
-            if (lVU == null)
+            var pipeline = await _context.Pipelines.SingleOrDefaultAsync(m => m.ID == id);
+            if (pipeline == null)
             {
                 return NotFound();
             }
-            return View(lVU);
+            return View(pipeline);
         }
 
-        // POST: LVUs/Edit/5
+        // POST: Pipeline/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] LVU lVU)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] Pipeline pipeline)
         {
-            if (id != lVU.ID)
+            if (id != pipeline.ID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace ACSWeb.Controllers
             {
                 try
                 {
-                    _context.Update(lVU);
+                    _context.Update(pipeline);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LVUExists(lVU.ID))
+                    if (!PipelineExists(pipeline.ID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace ACSWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(lVU);
+            return View(pipeline);
         }
 
-        // GET: LVUs/Delete/5
+        // GET: Pipeline/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var lVU = await _context.LVUs
+            var pipeline = await _context.Pipelines
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (lVU == null)
+            if (pipeline == null)
             {
                 return NotFound();
             }
 
-            return View(lVU);
+            return View(pipeline);
         }
 
-        // POST: LVUs/Delete/5
+        // POST: Pipeline/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var lVU = await _context.LVUs.SingleOrDefaultAsync(m => m.ID == id);
-            _context.LVUs.Remove(lVU);
+            var pipeline = await _context.Pipelines.SingleOrDefaultAsync(m => m.ID == id);
+            _context.Pipelines.Remove(pipeline);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LVUExists(int id)
+        private bool PipelineExists(int id)
         {
-            return _context.LVUs.Any(e => e.ID == id);
+            return _context.Pipelines.Any(e => e.ID == id);
         }
     }
 }

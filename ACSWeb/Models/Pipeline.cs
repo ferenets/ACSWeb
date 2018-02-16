@@ -9,6 +9,7 @@ namespace ACSWeb.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public ICollection<KS> KSList { get; set; }
+        //public ICollection<int> KSIDList { get; set; } //navigation property
+        public ICollection<KS> KSList { get; set; } //navigation property
     }
 }

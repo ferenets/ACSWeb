@@ -10,22 +10,22 @@ using ACSWeb.Models;
 
 namespace ACSWeb.Controllers
 {
-    public class KSController : Controller
+    public class UMGController : Controller
     {
         private readonly GTSContext _context;
 
-        public KSController(GTSContext context)
+        public UMGController(GTSContext context)
         {
             _context = context;
         }
 
-        // GET: KS
+        // GET: UMG
         public async Task<IActionResult> Index()
         {
-            return View(await _context.KSs.ToListAsync());
+            return View(await _context.UMGs.ToListAsync());
         }
 
-        // GET: KS/Details/5
+        // GET: UMG/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var kS = await _context.KSs
+            var uMG = await _context.UMGs
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (kS == null)
+            if (uMG == null)
             {
                 return NotFound();
             }
 
-            return View(kS);
+            return View(uMG);
         }
 
-        // GET: KS/Create
+        // GET: UMG/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: KS/Create
+        // POST: UMG/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name")] KS kS)
+        public async Task<IActionResult> Create([Bind("ID,Name,ShortName,City")] UMG uMG)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(kS);
+                _context.Add(uMG);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(kS);
+            return View(uMG);
         }
 
-        // GET: KS/Edit/5
+        // GET: UMG/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var kS = await _context.KSs.SingleOrDefaultAsync(m => m.ID == id);
-            if (kS == null)
+            var uMG = await _context.UMGs.SingleOrDefaultAsync(m => m.ID == id);
+            if (uMG == null)
             {
                 return NotFound();
             }
-            return View(kS);
+            return View(uMG);
         }
 
-        // POST: KS/Edit/5
+        // POST: UMG/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] KS kS)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ShortName,City")] UMG uMG)
         {
-            if (id != kS.ID)
+            if (id != uMG.ID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace ACSWeb.Controllers
             {
                 try
                 {
-                    _context.Update(kS);
+                    _context.Update(uMG);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!KSExists(kS.ID))
+                    if (!UMGExists(uMG.ID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace ACSWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(kS);
+            return View(uMG);
         }
 
-        // GET: KS/Delete/5
+        // GET: UMG/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var kS = await _context.KSs
+            var uMG = await _context.UMGs
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (kS == null)
+            if (uMG == null)
             {
                 return NotFound();
             }
 
-            return View(kS);
+            return View(uMG);
         }
 
-        // POST: KS/Delete/5
+        // POST: UMG/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var kS = await _context.KSs.SingleOrDefaultAsync(m => m.ID == id);
-            _context.KSs.Remove(kS);
+            var uMG = await _context.UMGs.SingleOrDefaultAsync(m => m.ID == id);
+            _context.UMGs.Remove(uMG);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool KSExists(int id)
+        private bool UMGExists(int id)
         {
-            return _context.KSs.Any(e => e.ID == id);
+            return _context.UMGs.Any(e => e.ID == id);
         }
     }
 }
