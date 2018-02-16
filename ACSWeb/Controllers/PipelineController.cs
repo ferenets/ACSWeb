@@ -54,7 +54,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name")] Pipeline pipeline)
+        public async Task<IActionResult> Create([Bind("ID,Name,ShortName")] Pipeline pipeline)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] Pipeline pipeline)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ShortName")] Pipeline pipeline)
         {
             if (id != pipeline.ID)
             {

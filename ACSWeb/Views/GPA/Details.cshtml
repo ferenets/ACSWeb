@@ -1,0 +1,77 @@
+﻿@model ACSWeb.Models.GPA
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>GPA</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GTDType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GTDType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VCNType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VCNType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StationNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StationNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CompShopNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CompShopNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.KS)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.KS.ID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SAK)
+        </dt>
+        
+        @if (Model.SAK != null)
+            {
+                <dd>
+                    @Html.DisplayFor(model => model.SAK.Name)
+                </dd>
+            }
+         else
+            {
+                <dd>
+                    Значення відсутнє. 
+                    <a asp-controller="SAK" asp-action="Create" asp-route="gpaID=@Model.ID">Додати САК</a>
+
+                    @*<h2><label asp-for="method" class="control-label"></label></h2>*@
+                </dd>
+            }
+
+
+
+
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -10,23 +10,23 @@ using ACSWeb.Models;
 
 namespace ACSWeb.Controllers
 {
-    public class LVUController : Controller
+    public class KSController : Controller
     {
         private readonly GTSContext _context;
 
-        public LVUController(GTSContext context)
+        public KSController(GTSContext context)
         {
             _context = context;
         }
 
-        // GET: LVU
+        // GET: KS
         public async Task<IActionResult> Index()
         {
-            var gTSContext = _context.LVUs.Include(l => l.UMG);
+            var gTSContext = _context.KSs.Include(k => k.LVU).Include(k => k.LVU.UMG).Include(k => k.Pipeline);
             return View(await gTSContext.ToListAsync());
         }
 
-        // GET: LVU/Details/5
+        // GET: KS/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,43 +34,45 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var lVU = await _context.LVUs
-                .Include(l => l.UMG)
+            var kS = await _context.KSs
+                .Include(k => k.LVU)
+                .Include(k => k.Pipeline)
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (lVU == null)
+            if (kS == null)
             {
                 return NotFound();
             }
 
-            return View(lVU);
+            return View(kS);
         }
 
-        // GET: LVU/Create
+        // GET: KS/Create
         public IActionResult Create()
         {
-            ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "Name");  //Подгрузка значений для списка при создании   ValueField & TextFievd for SelectionList!   //OR == ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "ID");
-            //ViewData["UMGname"] = new SelectList(_context.UMGs, "Name", "Name");
+            ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "Name");
+            ViewData["PipelineID"] = new SelectList(_context.Pipelines, "ID", "Name");
             return View();
         }
 
-        // POST: LVU/Create
+        // POST: KS/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,UMGID")] LVU lVU)
+        public async Task<IActionResult> Create([Bind("ID,Name,LVUID,PipelineID")] KS kS)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(lVU);
+                _context.Add(kS);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "ID", lVU.UMGID);
-            return View(lVU);
+            ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "ID", kS.LVUID);
+            ViewData["PipelineID"] = new SelectList(_context.Pipelines, "ID", "ID", kS.PipelineID);
+            return View(kS);
         }
 
-        // GET: LVU/Edit/5
+        // GET: KS/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,23 +80,24 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var lVU = await _context.LVUs.SingleOrDefaultAsync(m => m.ID == id);
-            if (lVU == null)
+            var kS = await _context.KSs.SingleOrDefaultAsync(m => m.ID == id);
+            if (kS == null)
             {
                 return NotFound();
             }
-            ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "Name", lVU.UMGID);  //OR==ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "ID", lVU.UMGID);
-            return View(lVU);
+            ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "ID", kS.LVUID);
+            ViewData["PipelineID"] = new SelectList(_context.Pipelines, "ID", "ID", kS.PipelineID);
+            return View(kS);
         }
 
-        // POST: LVU/Edit/5
+        // POST: KS/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,UMGID")] LVU lVU)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,LVUID,PipelineID")] KS kS)
         {
-            if (id != lVU.ID)
+            if (id != kS.ID)
             {
                 return NotFound();
             }
@@ -103,12 +106,12 @@ namespace ACSWeb.Controllers
             {
                 try
                 {
-                    _context.Update(lVU);
+                    _context.Update(kS);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LVUExists(lVU.ID))
+                    if (!KSExists(kS.ID))
                     {
                         return NotFound();
                     }
@@ -119,11 +122,12 @@ namespace ACSWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "ID", lVU.UMGID);
-            return View(lVU);
+            ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "ID", kS.LVUID);
+            ViewData["PipelineID"] = new SelectList(_context.Pipelines, "ID", "ID", kS.PipelineID);
+            return View(kS);
         }
 
-        // GET: LVU/Delete/5
+        // GET: KS/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -131,31 +135,32 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var lVU = await _context.LVUs
-                .Include(l => l.UMG)
+            var kS = await _context.KSs
+                .Include(k => k.LVU)
+                .Include(k => k.Pipeline)
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (lVU == null)
+            if (kS == null)
             {
                 return NotFound();
             }
 
-            return View(lVU);
+            return View(kS);
         }
 
-        // POST: LVU/Delete/5
+        // POST: KS/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var lVU = await _context.LVUs.SingleOrDefaultAsync(m => m.ID == id);
-            _context.LVUs.Remove(lVU);
+            var kS = await _context.KSs.SingleOrDefaultAsync(m => m.ID == id);
+            _context.KSs.Remove(kS);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LVUExists(int id)
+        private bool KSExists(int id)
         {
-            return _context.LVUs.Any(e => e.ID == id);
+            return _context.KSs.Any(e => e.ID == id);
         }
     }
 }

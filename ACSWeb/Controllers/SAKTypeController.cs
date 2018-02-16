@@ -10,23 +10,22 @@ using ACSWeb.Models;
 
 namespace ACSWeb.Controllers
 {
-    public class LVUController : Controller
+    public class SAKTypeController : Controller
     {
         private readonly GTSContext _context;
 
-        public LVUController(GTSContext context)
+        public SAKTypeController(GTSContext context)
         {
             _context = context;
         }
 
-        // GET: LVU
+        // GET: SAKType
         public async Task<IActionResult> Index()
         {
-            var gTSContext = _context.LVUs.Include(l => l.UMG);
-            return View(await gTSContext.ToListAsync());
+            return View(await _context.SAKTypes.ToListAsync());
         }
 
-        // GET: LVU/Details/5
+        // GET: SAKType/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,43 +33,39 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var lVU = await _context.LVUs
-                .Include(l => l.UMG)
+            var sAKType = await _context.SAKTypes
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (lVU == null)
+            if (sAKType == null)
             {
                 return NotFound();
             }
 
-            return View(lVU);
+            return View(sAKType);
         }
 
-        // GET: LVU/Create
+        // GET: SAKType/Create
         public IActionResult Create()
         {
-            ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "Name");  //Подгрузка значений для списка при создании   ValueField & TextFievd for SelectionList!   //OR == ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "ID");
-            //ViewData["UMGname"] = new SelectList(_context.UMGs, "Name", "Name");
             return View();
         }
 
-        // POST: LVU/Create
+        // POST: SAKType/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,UMGID")] LVU lVU)
+        public async Task<IActionResult> Create([Bind("ID,TypeName")] SAKType sAKType)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(lVU);
+                _context.Add(sAKType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "ID", lVU.UMGID);
-            return View(lVU);
+            return View(sAKType);
         }
 
-        // GET: LVU/Edit/5
+        // GET: SAKType/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,23 +73,22 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var lVU = await _context.LVUs.SingleOrDefaultAsync(m => m.ID == id);
-            if (lVU == null)
+            var sAKType = await _context.SAKTypes.SingleOrDefaultAsync(m => m.ID == id);
+            if (sAKType == null)
             {
                 return NotFound();
             }
-            ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "Name", lVU.UMGID);  //OR==ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "ID", lVU.UMGID);
-            return View(lVU);
+            return View(sAKType);
         }
 
-        // POST: LVU/Edit/5
+        // POST: SAKType/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,UMGID")] LVU lVU)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,TypeName")] SAKType sAKType)
         {
-            if (id != lVU.ID)
+            if (id != sAKType.ID)
             {
                 return NotFound();
             }
@@ -103,12 +97,12 @@ namespace ACSWeb.Controllers
             {
                 try
                 {
-                    _context.Update(lVU);
+                    _context.Update(sAKType);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LVUExists(lVU.ID))
+                    if (!SAKTypeExists(sAKType.ID))
                     {
                         return NotFound();
                     }
@@ -119,11 +113,10 @@ namespace ACSWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "ID", lVU.UMGID);
-            return View(lVU);
+            return View(sAKType);
         }
 
-        // GET: LVU/Delete/5
+        // GET: SAKType/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -131,31 +124,30 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var lVU = await _context.LVUs
-                .Include(l => l.UMG)
+            var sAKType = await _context.SAKTypes
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (lVU == null)
+            if (sAKType == null)
             {
                 return NotFound();
             }
 
-            return View(lVU);
+            return View(sAKType);
         }
 
-        // POST: LVU/Delete/5
+        // POST: SAKType/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var lVU = await _context.LVUs.SingleOrDefaultAsync(m => m.ID == id);
-            _context.LVUs.Remove(lVU);
+            var sAKType = await _context.SAKTypes.SingleOrDefaultAsync(m => m.ID == id);
+            _context.SAKTypes.Remove(sAKType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LVUExists(int id)
+        private bool SAKTypeExists(int id)
         {
-            return _context.LVUs.Any(e => e.ID == id);
+            return _context.SAKTypes.Any(e => e.ID == id);
         }
     }
 }

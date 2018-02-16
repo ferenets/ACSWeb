@@ -15,7 +15,8 @@ namespace ACSWeb.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(nullable: false),
+                    //ShortName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

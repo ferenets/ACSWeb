@@ -1,0 +1,64 @@
+﻿@model ACSWeb.Models.SAK
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>SAK</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MTBase" class="control-label"></label>
+                <input asp-for="MTBase" class="form-control" />
+                <span asp-validation-for="MTBase" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Manufacturer" class="control-label"></label>
+                <input asp-for="Manufacturer" class="form-control" />
+                <span asp-validation-for="Manufacturer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Seller" class="control-label"></label>
+                <input asp-for="Seller" class="form-control" />
+                <span asp-validation-for="Seller" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CommisioningDate" class="control-label"></label>
+                <input asp-for="CommisioningDate" class="form-control" />
+                <span asp-validation-for="CommisioningDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GPAID" class="control-label"></label>
+                <select asp-for="GPAID" class="form-control" asp-items="ViewBag.GPAID"></select>
+                <span asp-validation-for="GPAID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SAKTypeID" class="control-label"></label>
+                <select asp-for="SAKTypeID" class="form-control" asp-items="ViewBag.SAKTypeID"></select>
+                <span asp-validation-for="SAKTypeID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

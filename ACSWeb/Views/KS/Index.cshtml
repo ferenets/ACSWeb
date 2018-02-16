@@ -1,10 +1,10 @@
-﻿@model IEnumerable<ACSWeb.Models.LVU>
+﻿@model IEnumerable<ACSWeb.Models.KS>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Перелік ЛВУМГ</h2>
+<h2>Перелік КС</h2>
 
 <p>
     <a asp-action="Create">Створити новий</a>
@@ -13,10 +13,16 @@
     <thead>
         <tr>
             <th>
-                Назва    @*Html.DisplayNameFor(model => model.Name)*@
+                Назва
             </th>
             <th>
-                УМГ      @*Html.DisplayNameFor(model => model.UMG)*@
+                ЛВУМГ
+            </th>
+            <th>
+                УМГ
+            </th>
+            <th>
+                Газопровід
             </th>
             <th></th>
         </tr>
@@ -28,7 +34,13 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UMG.ShortName)
+                @Html.DisplayFor(modelItem => item.LVU.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LVU.UMG.ShortName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pipeline.ShortName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Змінити</a> |
