@@ -44,23 +44,23 @@
             @Html.DisplayNameFor(model => model.KS)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.KS.ID)
+            @Html.DisplayFor(model => model.KS.Name)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.SAK)
         </dt>
         
-        @if (Model.SAK != null)
+        @if (ViewData["SAKName"] != null)
             {
                 <dd>
-                    @Html.DisplayFor(model => model.SAK.Name)
+                    @ViewData["SAKName"]
                 </dd>
             }
          else
             {
                 <dd>
                     Значення відсутнє. 
-                    <a asp-controller="SAK" asp-action="Create" asp-route="gpaID=@Model.ID">Додати САК</a>
+                    <a asp-controller="SAK" asp-action="Create" asp-route-gpaid="@Model.ID">Додати САК</a>
 
                     @*<h2><label asp-for="method" class="control-label"></label></h2>*@
                 </dd>

@@ -50,9 +50,16 @@ namespace ACSWeb.Controllers
         }
 
         // GET: SAK/Create
-        public IActionResult Create(int GPAID)
+        public IActionResult Create(int? gpaid)
         {
-            ViewData["GPAID"] = new SelectList(_context.GPAs, "ID", "Type");
+            //ViewData["GPAID"] = new SelectList(_context.GPAs, "ID", "Type");
+            //GPA gpaForSAK = _context.GPAs.SingleOrDefault(g => g.ID == gpaid); // Выбираем ГПА для создания САУ под него
+            //ViewData["gpaForSAK"] = gpaForSAK;
+            //ViewData["GPAID"] = _context.GPAs.SingleOrDefault(g => g.ID == gpaid);
+
+            ViewData["GPAID"] = new SelectList(_context.GPAs, "ID", "Type", gpaid);
+
+
             ViewData["SAKTypeID"] = new SelectList(_context.SAKTypes, "ID", "TypeName");
             
             //ViewData["method"] = ("Method GET");

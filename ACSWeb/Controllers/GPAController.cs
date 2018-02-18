@@ -42,6 +42,14 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
+            var SAKofGPA = await _context.SAKs.SingleOrDefaultAsync(g => g.GPAID == id);
+            if (SAKofGPA != null)
+            {
+                ViewData["SAKName"] = SAKofGPA.Name;
+            }
+            //else
+            //{ViewData["SAKName"] = null};  //= _context.SAKs.SingleOrDefault(g => g.GPAID == id).Name;
+
             return View(gPA);
         }
 
