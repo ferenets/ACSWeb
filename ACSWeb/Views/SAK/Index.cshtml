@@ -1,40 +1,40 @@
 ﻿@model IEnumerable<ACSWeb.Models.SAK>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "САК";
 }
 
-<h2>Index</h2>
+<h2>Перелік САК</h2>
 @*<h2>
     <label asp-for="method" class="control-label"></label>
 </h2>*@
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Створити</a>
 </p>
 <table class="table">
     <thead>
         <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Name)
+                    Назва@*Html.DisplayNameFor(model => model.Name)*@
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.MTBase)
+                    Мат.техн. база@*Html.DisplayNameFor(model => model.MTBase)*@
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Manufacturer)
+                    Виробник@*Html.DisplayNameFor(model => model.Manufacturer)*@
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Seller)
+                    Постачальник@*Html.DisplayNameFor(model => model.Seller)*@
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CommisioningDate)
+                    Рік встановлення@*Html.DisplayNameFor(model => model.CommisioningDate)*@
                 </th>
             <th>
-                @Html.DisplayNameFor(model => model.GPA)
+                ГПА@*Html.DisplayNameFor(model => model.GPA)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SAKType)
+                Тип САК@*Html.DisplayNameFor(model => model.SAKType)*@
             </th>
             <th></th>
         </tr>
@@ -65,8 +65,8 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Змінити</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.ID">Деталі</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Видалити</a>
             </td>
         </tr>
 }
