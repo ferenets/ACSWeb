@@ -4,31 +4,31 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Перелік ГПА</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Створити новий</a>
 </p>
 <table class="table">
     <thead>
         <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Type)
+                    Тип ГПА
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.GTDType)
+                    Тип ГТД
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.VCNType)
+                    Тип ВЦН
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.StationNumber)
+                    Ст. №
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CompShopNumber)
+                    № КЦ
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.KS)
+                    КС
                 </th>
             <th></th>
         </tr>
@@ -55,9 +55,9 @@
                 @Html.DisplayFor(modelItem => item.KS.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ID">Змінити</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Деталі</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Видалити</a>
             </td>
         </tr>
 }

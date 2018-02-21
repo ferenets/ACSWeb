@@ -85,8 +85,8 @@ namespace ACSWeb.Controllers
             {
                 return NotFound();
             }
-            ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "ID", kS.LVUID);
-            ViewData["PipelineID"] = new SelectList(_context.Pipelines, "ID", "ID", kS.PipelineID);
+            ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "Name", kS.LVUID);
+            ViewData["PipelineID"] = new SelectList(_context.Pipelines, "ID", "ShortName", kS.PipelineID);
             return View(kS);
         }
 
