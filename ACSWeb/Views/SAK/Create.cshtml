@@ -1,60 +1,60 @@
 ﻿@model ACSWeb.Models.SAK
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Створити";
 }
 
-<h2>Create</h2>
+<h2>Створення САК</h2>
 
-<h4>SAK</h4>
+<h4>САК:</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Назва</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MTBase" class="control-label"></label>
+                <label asp-for="MTBase" class="control-label">Мат.технічна база</label>
                 <input asp-for="MTBase" class="form-control" />
                 <span asp-validation-for="MTBase" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Manufacturer" class="control-label"></label>
+                <label asp-for="Manufacturer" class="control-label">Виробник</label>
                 <input asp-for="Manufacturer" class="form-control" />
                 <span asp-validation-for="Manufacturer" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Seller" class="control-label"></label>
+                <label asp-for="Seller" class="control-label">Постачальник</label>
                 <input asp-for="Seller" class="form-control" />
                 <span asp-validation-for="Seller" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CommisioningDate" class="control-label"></label>
-                <input asp-for="CommisioningDate" class="form-control" />
+                <label asp-for="CommisioningDate" class="control-label">Дата впровадження</label>
+                <input asp-for="CommisioningDate" class="form-control" type="date"/>
                 <span asp-validation-for="CommisioningDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="GPAID" class="control-label"></label>
-                @*<select asp-for="GPAID" class="form-control" asp-items="ViewBag.GPAID"></select>*@
-                <select asp-for="GPAID" class="form-control" asp-items="ViewBag.GPAID"></select>
+                <label asp-for="GPAID" class="control-label">ГПА</label>
+                @*<select asp-for="GPAID" class="form-control" asp-items="ViewBag.GPAList"></select>*@
+                <select asp-for="GPAID" class="form-control" asp-items="ViewBag.GPAList"></select>
             </div>
             <div class="form-group">
-                <label asp-for="SAKTypeID" class="control-label"></label>
-                <select asp-for="SAKTypeID" class ="form-control" asp-items="ViewBag.SAKTypeID"></select>
+                <label asp-for="SAKTypeID" class="control-label">Тип САК</label>
+                <select asp-for="SAKTypeID" class ="form-control" asp-items="ViewBag.SAKTypeList"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Створити" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Назад до переліку</a>
 </div>
 
 @section Scripts {

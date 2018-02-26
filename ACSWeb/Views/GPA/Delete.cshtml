@@ -1,24 +1,30 @@
 ﻿@model ACSWeb.Models.GPA
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Видалити";
 }
 
-<h2>Delete</h2>
+<h2>Видалення ГПА</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Ви впевнені, що хочете видалити наступний ГПА?</h3>
 <div>
-    <h4>GPA</h4>
+    <h4>ГПА:</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Type)
+            ГПА ID:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+        <dt>
+            Тип ГПА:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Type)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.GTDType)
+            Тип ГТД:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.GTDType)
@@ -51,7 +57,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="ID" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Видалити" class="btn btn-danger" /> |
+        <a asp-action="Index">Назад до переліку</a>
     </form>
 </div>

@@ -30,15 +30,42 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Домашня</a></li>
-                    <li><a asp-area="" asp-controller="SAK" asp-action="Index">САК</a></li>
-                    <li><a asp-area="" asp-controller="GPA" asp-action="Index">ГПА</a></li>
-                    <li><a asp-area="" asp-controller="KS" asp-action="Index">КС</a></li>
-                    <li><a asp-area="" asp-controller="LVU" asp-action="Index">ЛВУ</a></li>
-                    <li><a asp-area="" asp-controller="UMG" asp-action="Index">УМГ</a></li>
-                    <li><a asp-area="" asp-controller="SAKType" asp-action="Index">Типи САК</a></li>
-                    <li><a asp-area="" asp-controller="Pipeline" asp-action="Index">Газопроводи</a></li>
+                    @*<li><a asp-area="" asp-controller="Home" asp-action="Index">Домашня</a></li>*@
+                    <li><a asp-area="" asp-controller="SAK" asp-action="Index">САК ГПА</a></li>
+                    @*<li><a asp-area="" asp-controller="GPA" asp-action="Index">ГПА</a></li>
+        <li><a asp-area="" asp-controller="KS" asp-action="Index">КС</a></li>
+        <li><a asp-area="" asp-controller="LVU" asp-action="Index">ЛВУ</a></li>
+        <li><a asp-area="" asp-controller="UMG" asp-action="Index">УМГ</a></li>*@
+                    @*<li><a asp-area="" asp-controller="SAKType" asp-action="Index">Типи САК</a></li>*@
+                    @*<li><a asp-area="" asp-controller="Pipeline" asp-action="Index">Газопроводи</a></li>*@
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            Довідник
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-area="" asp-controller="GPA" asp-action="Index">ГПА</a></li>
+                            <li><a asp-area="" asp-controller="SAKType" asp-action="Index">Типи САК</a></li>
+                            <li><a asp-area="" asp-controller="Pipeline" asp-action="Index">Газопроводи</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            Структура ПАТ
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-area="" asp-controller="UMG" asp-action="Index">УМГ</a></li>
+                            <li><a asp-area="" asp-controller="LVU" asp-action="Index">ЛВУ</a></li>
+                            <li><a asp-area="" asp-controller="KS" asp-action="Index">КС</a></li>
+                        </ul>
+                    </li>
+
                     <li><a asp-area="" asp-controller="Home" asp-action="About">Про проект</a></li>
+
+
                 </ul>
             </div>
         </div>

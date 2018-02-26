@@ -1,63 +1,69 @@
 ﻿@model ACSWeb.Models.SAK
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Видалити";
 }
 
-<h2>Delete</h2>
+<h2>Видалення САК</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Ви впевнені, що хочете видалити дану САК?</h3>
 <div>
-    <h4>SAK</h4>
+    <h4>САК:</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            ID в системі:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+        <dt>
+            Назва:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.MTBase)
+            Мат.технічна база:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.MTBase)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Manufacturer)
+            Виробник:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Manufacturer)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Seller)
+            Постачальник:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Seller)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.CommisioningDate)
+            Дата впровадження:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.CommisioningDate)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.GPA)
+            ГПА:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.GPA.ID)
+            @Html.DisplayFor(model => model.GPA.Type) (id = @Html.DisplayFor(model => model.GPA.ID))
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.SAKType)
+            Тип САК:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.SAKType.ID)
+            @Html.DisplayFor(model => model.SAKType.TypeName)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="ID" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Видалити" class="btn btn-danger" /> |
+        <a asp-action="Index">Назад до переліку</a>
     </form>
 </div>

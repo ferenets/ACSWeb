@@ -1,53 +1,59 @@
 ﻿@model ACSWeb.Models.SAK
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Деталі";
 }
 
-<h2>Details</h2>
+<h2>Деталі САК</h2>
 
 <div>
-    <h4>SAK</h4>
+    <h4>САК:</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            ID в системі:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+        <dt>
+            Назва
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.MTBase)
+            Мат.-технічна база:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.MTBase)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Manufacturer)
+            Виробник:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Manufacturer)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Seller)
+            Постачальник:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Seller)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.CommisioningDate)
+            Дата впровадження:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.CommisioningDate)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.GPA)
+            ГПА:
         </dt>
         <dd>
-            GPAid = @Html.DisplayFor(model => model.GPA.ID)
+            @Html.DisplayFor(model => model.GPA.Type) (id = @Html.DisplayFor(model => model.GPA.ID))
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.SAKType)
+            Тип САК:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.SAKType.TypeName)
@@ -55,6 +61,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Змінити</a> |
+    <a asp-action="Index">Назад до переліку</a>
 </div>

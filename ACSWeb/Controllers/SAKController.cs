@@ -57,10 +57,10 @@ namespace ACSWeb.Controllers
             //ViewData["gpaForSAK"] = gpaForSAK;
             //ViewData["GPAID"] = _context.GPAs.SingleOrDefault(g => g.ID == gpaid);
 
-            ViewData["GPAID"] = new SelectList(_context.GPAs, "ID", "Type", gpaid);
+            ViewData["GPAList"] = new SelectList(_context.GPAs, "ID", "Type", gpaid);
 
 
-            ViewData["SAKTypeID"] = new SelectList(_context.SAKTypes, "ID", "TypeName");
+            ViewData["SAKTypeList"] = new SelectList(_context.SAKTypes, "ID", "TypeName");
             
             //ViewData["method"] = ("Method GET");
             return View();

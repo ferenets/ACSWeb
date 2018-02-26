@@ -4,9 +4,9 @@
     ViewData["Title"] = "Редагування";
 }
 
-<h2>Редагування</h2>
+<h2>Редагування САК</h2>
 
-<h4>САК</h4>
+<h4>САК:</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -34,7 +34,7 @@
                 <span asp-validation-for="Seller" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CommisioningDate" class="control-label">Рік встановлення</label>
+                <label asp-for="CommisioningDate" class="control-label">Дата впровадження</label>
                 <input asp-for="CommisioningDate" class="form-control" type="date"/>
 
                 @*@Html.TextBoxFor(m => m.CommisioningDate.Year)*@
@@ -53,7 +53,7 @@
                 <span asp-validation-for="SAKTypeID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Зберегти" class="btn btn-primary" />
             </div>
         </form>
     </div>
