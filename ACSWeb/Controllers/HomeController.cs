@@ -4,14 +4,38 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ACSWeb.Data;
 using ACSWeb.Models;
 
 namespace ACSWeb.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+
+        private readonly GTSContext _context;
+
+        public HomeController(GTSContext context)
         {
+            _context = context;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            // Формирование данных для статистики
+            //var GTSSAKList = _context.SAKs.Include(s => s.GPA).Include(s => s.GPA.KS).Include(s => s.SAKType);
+            //return View(await gTSContext.ToListAsync());
+            ViewData["NoOfSAK"] = _context.SAKs.Count();   //Кол-во САУ в системе
+
+            int SAKage = 12; // Выбираются САУ старше этого возраста
+
+            ViewData["NoOfSAKOlder12"] = _context.SAKs.Where(s => (DateTime.Now.Year - s.CommisioningDate.Year) > SAKage).Count();   //Кол-во САУ, старше SAKage лет в системе
+
+
+            ViewData["NoOfGPA"] = _context.GPAs.Count();   // Кол-во ГПА в системе
+            ViewData["NoOfPipelines"] = _context.Pipelines.Count();   // Кол-во газопроводов в системе
+
+
             return View();
         }
 
