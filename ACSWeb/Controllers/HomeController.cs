@@ -5,6 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using ACSWeb.Data;
 using ACSWeb.Models;
 
@@ -38,10 +41,10 @@ namespace ACSWeb.Controllers
 
             return View();
         }
-
+        [Authorize]
         public IActionResult About()
         {
-            ViewData["Message"] = "Веб каталог систем автоматики та телемеханіки.";
+            ViewData["Message"] = "Веб каталог систем автоматики та телемеханіки."  ;
 
             return View();
         }

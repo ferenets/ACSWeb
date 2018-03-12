@@ -33,9 +33,9 @@
                     @*<li><a asp-area="" asp-controller="Home" asp-action="Index">Домашня</a></li>*@
                     <li><a asp-area="" asp-controller="SAK" asp-action="Index">САК ГПА</a></li>
                     @*<li><a asp-area="" asp-controller="GPA" asp-action="Index">ГПА</a></li>
-        <li><a asp-area="" asp-controller="KS" asp-action="Index">КС</a></li>
-        <li><a asp-area="" asp-controller="LVU" asp-action="Index">ЛВУ</a></li>
-        <li><a asp-area="" asp-controller="UMG" asp-action="Index">УМГ</a></li>*@
+            <li><a asp-area="" asp-controller="KS" asp-action="Index">КС</a></li>
+            <li><a asp-area="" asp-controller="LVU" asp-action="Index">ЛВУ</a></li>
+            <li><a asp-area="" asp-controller="UMG" asp-action="Index">УМГ</a></li>*@
                     @*<li><a asp-area="" asp-controller="SAKType" asp-action="Index">Типи САК</a></li>*@
                     @*<li><a asp-area="" asp-controller="Pipeline" asp-action="Index">Газопроводи</a></li>*@
 
@@ -67,6 +67,10 @@
 
 
                 </ul>
+                @await Html.PartialAsync("_LoginPartial")
+
+
+
             </div>
         </div>
     </nav>

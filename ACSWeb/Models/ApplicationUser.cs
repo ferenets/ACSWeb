@@ -9,5 +9,10 @@ namespace ACSWeb.Models
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
+        //public int ID { get; set; }   //Поля UserName и Email уже включены в IdentityUser
+
+        public DateTime CreationDate { get; set; }
+        public DateTime LastEditedDate { get; set; }
+
     }
 }

@@ -8,6 +8,10 @@ namespace ACSWeb.Models.AccountViewModels
 {
     public class LoginViewModel
     {
+        
+        //[Display(Name = "User Name")]
+        //public string UserName { get; set; }
+                
         [Required]
         [EmailAddress]
         public string Email { get; set; }
