@@ -7,8 +7,8 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection; //added
-using ACSWeb.Data;
+using Microsoft.Extensions.DependencyInjection; //Добавлено
+using ACSWeb.Data; //Добавлено
 
 namespace ACSWeb
 {
@@ -16,7 +16,7 @@ namespace ACSWeb
     {
         public static void Main(string[] args)
         {
-        //    BuildWebHost(args).Run();  //original
+            //    BuildWebHost(args).Run();  //original
 
             //--------- для ініціалізаці БД у разі її відсутності або пустоти
             var host = BuildWebHost(args);

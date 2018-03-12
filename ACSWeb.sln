@@ -1,7 +1,9 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACSWeb", "ACSWeb\ACSWeb.csproj", "{E6982B53-C862-407C-A827-75526F2E8255}"
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACSWeb", "ACSWeb\ACSWeb.csproj", "{AFC0DAB3-F90D-44D3-8A49-D78E3A83403B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,9 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E6982B53-C862-407C-A827-75526F2E8255}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6982B53-C862-407C-A827-75526F2E8255}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6982B53-C862-407C-A827-75526F2E8255}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6982B53-C862-407C-A827-75526F2E8255}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFC0DAB3-F90D-44D3-8A49-D78E3A83403B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFC0DAB3-F90D-44D3-8A49-D78E3A83403B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFC0DAB3-F90D-44D3-8A49-D78E3A83403B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFC0DAB3-F90D-44D3-8A49-D78E3A83403B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {86DE60DF-EFD8-4F09-A135-5C400C6817CC}
 	EndGlobalSection
 EndGlobal
