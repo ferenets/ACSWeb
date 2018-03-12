@@ -22,7 +22,7 @@ namespace ACSWeb.Controllers
         // GET: SAK
         public async Task<IActionResult> Index()
         {
-            var gTSContext = _context.SAKs.Include(s => s.GPA).Include(s => s.GPA.KS).Include(s => s.SAKType);
+            var gTSContext = _context.SAKs.Include(s => s.GPA).Include(s => s.GPA.KS).Include(s => s.GPA.KS.LVU).Include(s => s.GPA.KS.LVU.UMG).Include(s => s.SAKType);
             return View(await gTSContext.ToListAsync());
         }
 

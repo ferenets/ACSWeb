@@ -15,21 +15,27 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    Назва
-                </th>
-                <th>
-                    Мат.техн. база
-                </th>
-                <th>
-                    Виробник
-                </th>
-                <th>
-                    Постачальник
-                </th>
-                <th>
-                    Рік встановлення
-                </th>
+            <th>
+                УМГ
+            </th>
+            <th>
+                КС
+            </th>
+            <th>
+                Назва
+            </th>
+            <th>
+                Мат.техн. база
+            </th>
+            <th>
+                Виробник
+            </th>
+            <th>
+                Постачальник
+            </th>
+            <th>
+                Рік встановлення
+            </th>
             <th>
                 ГПА
             </th>
@@ -42,6 +48,12 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GPA.KS.LVU.UMG.ShortName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GPA.KS.Name)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>

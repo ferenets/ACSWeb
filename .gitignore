@@ -39,3 +39,4 @@ Thumbs.db
 # dotCover
 *.dotCover
 /.vs/ACSWeb/v15/Server/sqlite3
+/Сертификаты
