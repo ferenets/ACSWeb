@@ -13,6 +13,7 @@ using ACSWeb.Models;
 
 namespace ACSWeb.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
 
@@ -23,6 +24,7 @@ namespace ACSWeb.Controllers
             _context = context;
         }
 
+        
         public async Task<IActionResult> Index()
         {
             // Формирование данных для статистики
@@ -41,7 +43,7 @@ namespace ACSWeb.Controllers
 
             return View();
         }
-        [Authorize]
+        
         public IActionResult About()
         {
             ViewData["Message"] = "Веб каталог систем автоматики та телемеханіки."  ;
@@ -49,12 +51,14 @@ namespace ACSWeb.Controllers
             return View();
         }
 
+        
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
 
             return View();
         }
+
 
         public IActionResult Error()
         {

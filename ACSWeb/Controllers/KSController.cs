@@ -7,9 +7,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ACSWeb.Data;
 using ACSWeb.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace ACSWeb.Controllers
 {
+    [Authorize]
     public class KSController : Controller
     {
         private readonly GTSContext _context;
