@@ -106,7 +106,7 @@ namespace ACSWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
+/*        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendVerificationEmail(IndexViewModel model)
         {
@@ -128,7 +128,7 @@ namespace ACSWeb.Controllers
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToAction(nameof(Index));
-        }
+        }*/
 
         [HttpGet]
         public async Task<IActionResult> ChangePassword()
