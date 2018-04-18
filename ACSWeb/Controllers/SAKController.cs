@@ -12,23 +12,23 @@ using ACSWeb.Models;
 namespace ACSWeb.Controllers
 {
     [Authorize]
-    public class KSPipelineController : Controller
+    public class SAKController : Controller
     {
         private readonly GTSContext _context;
 
-        public KSPipelineController(GTSContext context)
+        public SAKController(GTSContext context)
         {
             _context = context;
         }
 
-        // GET: KSPipeline
+        // GET: SAK
         public async Task<IActionResult> Index()
         {
-            var gTSContext = _context.KSPipeline.Include(k => k.KS).Include(k => k.Pipeline);
+            var gTSContext = _context.SAKs.Include(s => s.AOType).Include(s => s.PLC).Include(s => s.SAKType);
             return View(await gTSContext.ToListAsync());
         }
 
-        // GET: KSPipeline/Details/5
+        // GET: SAK/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,47 +36,50 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var kSPipeline = await _context.KSPipeline
-                .Include(k => k.KS)
-                .Include(k => k.Pipeline)
+            var sAK = await _context.SAKs
+                .Include(s => s.AOType)
+                .Include(s => s.PLC)
+                .Include(s => s.SAKType)
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (kSPipeline == null)
+            if (sAK == null)
             {
                 return NotFound();
             }
 
-            return View(kSPipeline);
+            return View(sAK);
         }
 
-        // GET: KSPipeline/Create
+        // GET: SAK/Create
         public IActionResult Create()
         {
-            ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name");
-            ViewData["PipelineID"] = new SelectList(_context.Pipelines, "ID", "Name");
+            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name");
+            ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "Name");
+            ViewData["SAKTypeID"] = new SelectList(_context.SAKTypes, "ID", "Name");
             return View();
         }
 
-        // POST: KSPipeline/Create
+        // POST: SAK/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,KSID,PipelineID")] KSPipeline kSPipeline)
+        public async Task<IActionResult> Create([Bind("ID,Name,PLCID,Manufacturer,Seller,CommisioningDate,AOTypeID,AOID,SAKTypeID,Notes")] SAK sAK)
         {
             if (ModelState.IsValid)
             {
-                kSPipeline.CreationDate = DateTime.Now;
+                sAK.CreationDate = DateTime.Now;
 
-                _context.Add(kSPipeline);
+                _context.Add(sAK);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name", kSPipeline.KSID);
-            ViewData["PipelineID"] = new SelectList(_context.Pipelines, "ID", "Name", kSPipeline.PipelineID);
-            return View(kSPipeline);
+            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", sAK.AOTypeID);
+            ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "Name", sAK.PLCID);
+            ViewData["SAKTypeID"] = new SelectList(_context.SAKTypes, "ID", "Name", sAK.SAKTypeID);
+            return View(sAK);
         }
 
-        // GET: KSPipeline/Edit/5
+        // GET: SAK/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -84,24 +87,25 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var kSPipeline = await _context.KSPipeline.SingleOrDefaultAsync(m => m.ID == id);
-            if (kSPipeline == null)
+            var sAK = await _context.SAKs.SingleOrDefaultAsync(m => m.ID == id);
+            if (sAK == null)
             {
                 return NotFound();
             }
-            ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name", kSPipeline.KSID);
-            ViewData["PipelineID"] = new SelectList(_context.Pipelines, "ID", "Name", kSPipeline.PipelineID);
-            return View(kSPipeline);
+            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", sAK.AOTypeID);
+            ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "Name", sAK.PLCID);
+            ViewData["SAKTypeID"] = new SelectList(_context.SAKTypes, "ID", "Name", sAK.SAKTypeID);
+            return View(sAK);
         }
 
-        // POST: KSPipeline/Edit/5
+        // POST: SAK/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,KSID,PipelineID,CreationDate")] KSPipeline kSPipeline)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,PLCID,Manufacturer,Seller,CommisioningDate,AOTypeID,AOID,SAKTypeID,Notes,CreationDate")] SAK sAK)
         {
-            if (id != kSPipeline.ID)
+            if (id != sAK.ID)
             {
                 return NotFound();
             }
@@ -110,14 +114,14 @@ namespace ACSWeb.Controllers
             {
                 try
                 {
-                    kSPipeline.LastEditDate = DateTime.Now;
+                    sAK.LastEditDate = DateTime.Now;
 
-                    _context.Update(kSPipeline);
+                    _context.Update(sAK);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!KSPipelineExists(kSPipeline.ID))
+                    if (!SAKExists(sAK.ID))
                     {
                         return NotFound();
                     }
@@ -128,12 +132,13 @@ namespace ACSWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name", kSPipeline.KSID);
-            ViewData["PipelineID"] = new SelectList(_context.Pipelines, "ID", "Name", kSPipeline.PipelineID);
-            return View(kSPipeline);
+            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", sAK.AOTypeID);
+            ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "Name", sAK.PLCID);
+            ViewData["SAKTypeID"] = new SelectList(_context.SAKTypes, "ID", "Name", sAK.SAKTypeID);
+            return View(sAK);
         }
 
-        // GET: KSPipeline/Delete/5
+        // GET: SAK/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -141,32 +146,33 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var kSPipeline = await _context.KSPipeline
-                .Include(k => k.KS)
-                .Include(k => k.Pipeline)
+            var sAK = await _context.SAKs
+                .Include(s => s.AOType)
+                .Include(s => s.PLC)
+                .Include(s => s.SAKType)
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (kSPipeline == null)
+            if (sAK == null)
             {
                 return NotFound();
             }
 
-            return View(kSPipeline);
+            return View(sAK);
         }
 
-        // POST: KSPipeline/Delete/5
+        // POST: SAK/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var kSPipeline = await _context.KSPipeline.SingleOrDefaultAsync(m => m.ID == id);
-            _context.KSPipeline.Remove(kSPipeline);
+            var sAK = await _context.SAKs.SingleOrDefaultAsync(m => m.ID == id);
+            _context.SAKs.Remove(sAK);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool KSPipelineExists(int id)
+        private bool SAKExists(int id)
         {
-            return _context.KSPipeline.Any(e => e.ID == id);
+            return _context.SAKs.Any(e => e.ID == id);
         }
     }
 }

@@ -44,7 +44,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @*<li><a asp-area="" asp-controller="Home" asp-action="Index">Домашня</a></li>*@
-                    <li><a asp-area="" asp-controller="SAK" asp-action="Index">САК ГПА</a></li>
+                    <li><a asp-area="" asp-controller="SAK" asp-action="Index">САК</a></li>
                     @*<li><a asp-area="" asp-controller="GPA" asp-action="Index">ГПА</a></li>
             <li><a asp-area="" asp-controller="KS" asp-action="Index">КС</a></li>
             <li><a asp-area="" asp-controller="LVU" asp-action="Index">ЛВУ</a></li>
@@ -60,8 +60,13 @@
                         <ul class="dropdown-menu">
                             <li><a asp-area="" asp-controller="GPA" asp-action="Index">ГПА</a></li>
                             <li><a asp-area="" asp-controller="SAKType" asp-action="Index">Типи САК</a></li>
+                            <li><a asp-area="" asp-controller="PLC" asp-action="Index">ПЛК</a></li>
+                            <li><a asp-area="" asp-controller="AOType" asp-action="Index">Типи об'єктів автоматизації</a></li>
                             <li><a asp-area="" asp-controller="Pipeline" asp-action="Index">Газопроводи</a></li>
                             <li><a asp-area="" asp-controller="KSPipeline" asp-action="Index">Газопроводи-КС</a></li>
+                            <li class="disabled"><a asp-area="" asp-controller="GRS" asp-action="Index" >ГРС</a></li>
+                            <li class="disabled"><a asp-area="" asp-controller="SLTM" asp-action="Index">СЛТМ</a></li>
+                            <li class="disabled"><a asp-area="" asp-controller="Other" asp-action="Index">Інше</a></li>
                         </ul>
                     </li>
 
@@ -74,6 +79,7 @@
                             <li><a asp-area="" asp-controller="UMG" asp-action="Index">УМГ</a></li>
                             <li><a asp-area="" asp-controller="LVU" asp-action="Index">ЛВУ</a></li>
                             <li><a asp-area="" asp-controller="KS" asp-action="Index">КС</a></li>
+
                         </ul>
                     </li>
 

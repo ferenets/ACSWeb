@@ -56,10 +56,12 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,TypeName,Notes")] SAKType sAKType)
+        public async Task<IActionResult> Create([Bind("ID,Name,Notes")] SAKType sAKType)
         {
             if (ModelState.IsValid)
             {
+                sAKType.CreationDate = DateTime.Now;
+
                 _context.Add(sAKType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -88,7 +90,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,TypeName,Notes")] SAKType sAKType)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Notes,CreationDate")] SAKType sAKType)
         {
             if (id != sAKType.ID)
             {
@@ -99,6 +101,8 @@ namespace ACSWeb.Controllers
             {
                 try
                 {
+                    sAKType.LastEditDate = DateTime.Now;
+
                     _context.Update(sAKType);
                     await _context.SaveChangesAsync();
                 }

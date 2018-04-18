@@ -8,8 +8,10 @@ namespace ACSWeb.Models
     public class SAKType
     {
         public int ID { get; set; }
-        public string TypeName { get; set; }
+        public string Name { get; set; }
         public string Notes { get; set; }  //Primechaniya
+        public DateTime CreationDate { get; set; }
+        public DateTime LastEditDate { get; set; }
 
     }
 }

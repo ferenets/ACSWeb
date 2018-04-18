@@ -12,22 +12,22 @@ using ACSWeb.Models;
 namespace ACSWeb.Controllers
 {
     [Authorize]
-    public class AOTypeController : Controller
+    public class PLCController : Controller
     {
         private readonly GTSContext _context;
 
-        public AOTypeController(GTSContext context)
+        public PLCController(GTSContext context)
         {
             _context = context;
         }
 
-        // GET: AOType
+        // GET: PLC
         public async Task<IActionResult> Index()
         {
-            return View(await _context.AOTypes.ToListAsync());
+            return View(await _context.PLCs.ToListAsync());
         }
 
-        // GET: AOType/Details/5
+        // GET: PLC/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,41 +35,41 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var aOType = await _context.AOTypes
+            var pLC = await _context.PLCs
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (aOType == null)
+            if (pLC == null)
             {
                 return NotFound();
             }
 
-            return View(aOType);
+            return View(pLC);
         }
 
-        // GET: AOType/Create
+        // GET: PLC/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: AOType/Create
+        // POST: PLC/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,ShortName,ControllerName,AOTableName,Notes")] AOType aOType)
+        public async Task<IActionResult> Create([Bind("ID,Manufacturer,ModelName,Notes")] PLC pLC)
         {
             if (ModelState.IsValid)
             {
-                aOType.CreationDate = DateTime.Now;
+                pLC.CreationDate = DateTime.Now;
 
-                _context.Add(aOType);
+                _context.Add(pLC);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(aOType);
+            return View(pLC);
         }
 
-        // GET: AOType/Edit/5
+        // GET: PLC/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,22 +77,22 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var aOType = await _context.AOTypes.SingleOrDefaultAsync(m => m.ID == id);
-            if (aOType == null)
+            var pLC = await _context.PLCs.SingleOrDefaultAsync(m => m.ID == id);
+            if (pLC == null)
             {
                 return NotFound();
             }
-            return View(aOType);
+            return View(pLC);
         }
 
-        // POST: AOType/Edit/5
+        // POST: PLC/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ShortName,ControllerName,AOTableName,CreationDate,Notes")] AOType aOType)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Manufacturer,ModelName,Notes,CreationDate")] PLC pLC)
         {
-            if (id != aOType.ID)
+            if (id != pLC.ID)
             {
                 return NotFound();
             }
@@ -101,14 +101,14 @@ namespace ACSWeb.Controllers
             {
                 try
                 {
-                    aOType.LastEditDate = DateTime.Now;
+                    pLC.LastEditDate = DateTime.Now;
 
-                    _context.Update(aOType);
+                    _context.Update(pLC);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AOTypeExists(aOType.ID))
+                    if (!PLCExists(pLC.ID))
                     {
                         return NotFound();
                     }
@@ -119,10 +119,10 @@ namespace ACSWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(aOType);
+            return View(pLC);
         }
 
-        // GET: AOType/Delete/5
+        // GET: PLC/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,30 +130,30 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var aOType = await _context.AOTypes
+            var pLC = await _context.PLCs
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (aOType == null)
+            if (pLC == null)
             {
                 return NotFound();
             }
 
-            return View(aOType);
+            return View(pLC);
         }
 
-        // POST: AOType/Delete/5
+        // POST: PLC/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var aOType = await _context.AOTypes.SingleOrDefaultAsync(m => m.ID == id);
-            _context.AOTypes.Remove(aOType);
+            var pLC = await _context.PLCs.SingleOrDefaultAsync(m => m.ID == id);
+            _context.PLCs.Remove(pLC);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AOTypeExists(int id)
+        private bool PLCExists(int id)
         {
-            return _context.AOTypes.Any(e => e.ID == id);
+            return _context.PLCs.Any(e => e.ID == id);
         }
     }
 }

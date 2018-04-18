@@ -12,6 +12,18 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastEditDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastEditDate)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.KS)
         </dt>
         <dd>
@@ -26,8 +38,7 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="KSID" />
-        <input type="hidden" asp-for="PipelineID" />
+        <input type="hidden" asp-for="ID" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>

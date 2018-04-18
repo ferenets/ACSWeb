@@ -56,10 +56,13 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,ShortName,City,Notes,CreationDate,LastEditDate")] UMG uMG)
+        public async Task<IActionResult> Create([Bind("ID,Name,ShortName,City,Notes")] UMG uMG)
         {
             if (ModelState.IsValid)
             {
+                uMG.CreationDate = DateTime.Now;
+                //uMG.LastEditDate = 0;
+
                 _context.Add(uMG);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -88,7 +91,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ShortName,City,Notes,CreationDate,LastEditDate")] UMG uMG)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ShortName,City,Notes,CreationDate")] UMG uMG)
         {
             if (id != uMG.ID)
             {
@@ -99,6 +102,7 @@ namespace ACSWeb.Controllers
             {
                 try
                 {
+                    uMG.LastEditDate = DateTime.Now;
                     _context.Update(uMG);
                     await _context.SaveChangesAsync();
                 }
