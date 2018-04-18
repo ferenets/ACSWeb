@@ -61,10 +61,12 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,KSID,PipelineID,CreationDate,LastEditDate")] KSPipeline kSPipeline)
+        public async Task<IActionResult> Create([Bind("ID,KSID,PipelineID")] KSPipeline kSPipeline)
         {
             if (ModelState.IsValid)
             {
+                kSPipeline.CreationDate = DateTime.Now;
+
                 _context.Add(kSPipeline);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -97,7 +99,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,KSID,PipelineID,CreationDate,LastEditDate")] KSPipeline kSPipeline)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,KSID,PipelineID,CreationDate")] KSPipeline kSPipeline)
         {
             if (id != kSPipeline.ID)
             {
@@ -108,6 +110,8 @@ namespace ACSWeb.Controllers
             {
                 try
                 {
+                    kSPipeline.LastEditDate = DateTime.Now;
+
                     _context.Update(kSPipeline);
                     await _context.SaveChangesAsync();
                 }

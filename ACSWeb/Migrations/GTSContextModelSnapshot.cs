@@ -283,9 +283,13 @@ namespace ACSWeb.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Notes");
+                    b.Property<DateTime>("CreationDate");
 
-                    b.Property<string>("TypeName");
+                    b.Property<DateTime>("LastEditDate");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Notes");
 
                     b.HasKey("ID");
 

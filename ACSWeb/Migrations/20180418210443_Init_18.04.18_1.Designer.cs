@@ -11,7 +11,7 @@ using System;
 namespace ACSWeb.Migrations
 {
     [DbContext(typeof(GTSContext))]
-    [Migration("20180418201140_Init_18.04.18_1")]
+    [Migration("20180418210443_Init_18.04.18_1")]
     partial class Init_180418_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -284,9 +284,13 @@ namespace ACSWeb.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Notes");
+                    b.Property<DateTime>("CreationDate");
 
-                    b.Property<string>("TypeName");
+                    b.Property<DateTime>("LastEditDate");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Notes");
 
                     b.HasKey("ID");
 

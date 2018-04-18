@@ -53,7 +53,7 @@ namespace ACSWeb.Controllers
         public IActionResult Create()
         {
             ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name");
-            ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "ModelName");
+            ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "Name");
             ViewData["SAKTypeID"] = new SelectList(_context.SAKTypes, "ID", "Name");
             return View();
         }
@@ -63,16 +63,18 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,PLCID,Manufacturer,Seller,CommisioningDate,AOTypeID,AOID,SAKTypeID,Notes,CreationDate,LastEditDate")] SAK sAK)
+        public async Task<IActionResult> Create([Bind("ID,Name,PLCID,Manufacturer,Seller,CommisioningDate,AOTypeID,AOID,SAKTypeID,Notes")] SAK sAK)
         {
             if (ModelState.IsValid)
             {
+                sAK.CreationDate = DateTime.Now;
+
                 _context.Add(sAK);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", sAK.AOTypeID);
-            ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "ModelName", sAK.PLCID);
+            ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "Name", sAK.PLCID);
             ViewData["SAKTypeID"] = new SelectList(_context.SAKTypes, "ID", "Name", sAK.SAKTypeID);
             return View(sAK);
         }
@@ -91,7 +93,7 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
             ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", sAK.AOTypeID);
-            ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "ModelName", sAK.PLCID);
+            ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "Name", sAK.PLCID);
             ViewData["SAKTypeID"] = new SelectList(_context.SAKTypes, "ID", "Name", sAK.SAKTypeID);
             return View(sAK);
         }
@@ -101,7 +103,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,PLCID,Manufacturer,Seller,CommisioningDate,AOTypeID,AOID,SAKTypeID,Notes,CreationDate,LastEditDate")] SAK sAK)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,PLCID,Manufacturer,Seller,CommisioningDate,AOTypeID,AOID,SAKTypeID,Notes,CreationDate")] SAK sAK)
         {
             if (id != sAK.ID)
             {
@@ -112,6 +114,8 @@ namespace ACSWeb.Controllers
             {
                 try
                 {
+                    sAK.LastEditDate = DateTime.Now;
+
                     _context.Update(sAK);
                     await _context.SaveChangesAsync();
                 }
@@ -129,7 +133,7 @@ namespace ACSWeb.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", sAK.AOTypeID);
-            ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "ModelName", sAK.PLCID);
+            ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "Name", sAK.PLCID);
             ViewData["SAKTypeID"] = new SelectList(_context.SAKTypes, "ID", "Name", sAK.SAKTypeID);
             return View(sAK);
         }

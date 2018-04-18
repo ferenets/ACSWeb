@@ -61,6 +61,7 @@ namespace ACSWeb.Controllers
             if (ModelState.IsValid)
             {
                 uMG.CreationDate = DateTime.Now;
+                //uMG.LastEditDate = 0;
 
                 _context.Add(uMG);
                 await _context.SaveChangesAsync();
@@ -90,7 +91,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ShortName,City,Notes")] UMG uMG)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ShortName,City,Notes,CreationDate")] UMG uMG)
         {
             if (id != uMG.ID)
             {

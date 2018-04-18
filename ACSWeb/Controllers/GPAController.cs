@@ -59,10 +59,12 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Power,EngineType,EngineName,VCNName,StationNumber,CreationDate,LastEditDate,KSID,Notes")] GPA gPA)
+        public async Task<IActionResult> Create([Bind("ID,Name,Power,EngineType,EngineName,VCNName,StationNumber,KSID,Notes")] GPA gPA)
         {
             if (ModelState.IsValid)
             {
+                gPA.CreationDate = DateTime.Now;
+
                 _context.Add(gPA);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -93,7 +95,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Power,EngineType,EngineName,VCNName,StationNumber,CreationDate,LastEditDate,KSID,Notes")] GPA gPA)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Power,EngineType,EngineName,VCNName,StationNumber,CreationDate,KSID,Notes")] GPA gPA)
         {
             if (id != gPA.ID)
             {
@@ -104,6 +106,8 @@ namespace ACSWeb.Controllers
             {
                 try
                 {
+                    gPA.LastEditDate = DateTime.Now;
+
                     _context.Update(gPA);
                     await _context.SaveChangesAsync();
                 }

@@ -57,9 +57,9 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            ViewData["PipelinesList"] = await _context.KSPipeline 
-                    .Include(p=>p.Pipeline)            
-                    .AllAsync(m=>m.KSID == id);
+            //ViewData["PipelinesList"] = await _context.KSPipeline 
+            //       .Include(p=>p.Pipeline)            
+            //       .AllAsync(m=>m.KSID == id);
 
 
             return View(kS);
@@ -77,10 +77,12 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,LVUID,Notes,CreationDate,LastEditDate")] KS kS)
+        public async Task<IActionResult> Create([Bind("ID,Name,LVUID,Notes")] KS kS)
         {
             if (ModelState.IsValid)
             {
+                kS.CreationDate = DateTime.Now;
+
                 _context.Add(kS);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -111,7 +113,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,LVUID,Notes,CreationDate,LastEditDate")] KS kS)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,LVUID,Notes,CreationDate")] KS kS)
         {
             if (id != kS.ID)
             {
@@ -122,6 +124,8 @@ namespace ACSWeb.Controllers
             {
                 try
                 {
+                    kS.LastEditDate = DateTime.Now;
+
                     _context.Update(kS);
                     await _context.SaveChangesAsync();
                 }
