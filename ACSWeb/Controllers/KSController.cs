@@ -7,14 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ACSWeb.Data;
 using ACSWeb.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-
 
 namespace ACSWeb.Controllers
 {
-    [Authorize]
     public class KSController : Controller
     {
         private readonly GTSContext _context;
@@ -27,7 +22,7 @@ namespace ACSWeb.Controllers
         // GET: KS
         public async Task<IActionResult> Index()
         {
-            var gTSContext = _context.KSs.Include(k => k.LVU).Include(k => k.LVU.UMG).Include(k => k.Pipeline);
+            var gTSContext = _context.KSs.Include(k => k.LVU);
             return View(await gTSContext.ToListAsync());
         }
 
@@ -41,12 +36,29 @@ namespace ACSWeb.Controllers
 
             var kS = await _context.KSs
                 .Include(k => k.LVU)
-                .Include(k => k.Pipeline)
+                .Include(pl=>pl.PipelineList)
+                //.A Include(_context.Pipelines)
+
+                //.Join(_context.KSPipeline, k=>k.PipelineList, p=>p.PipelineID,
+                //(p, k) => new // результат
+                //{
+                //    PipelineName = p. Pipeline.Name,
+                //    KSName = k.KS.Name,
+                //}
+
+                //))
+                //.Join(_context.Pipelines, p=>p.PipelineList.Join , )
+
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (kS == null)
             {
                 return NotFound();
             }
+
+            ViewData["PipelinesList"] = await _context.KSPipeline 
+                    .Include(p=>p.Pipeline)            
+                    .AllAsync(m=>m.KSID == id);
+
 
             return View(kS);
         }
@@ -55,7 +67,6 @@ namespace ACSWeb.Controllers
         public IActionResult Create()
         {
             ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "Name");
-            ViewData["PipelineID"] = new SelectList(_context.Pipelines, "ID", "Name");
             return View();
         }
 
@@ -64,7 +75,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,LVUID,PipelineID")] KS kS)
+        public async Task<IActionResult> Create([Bind("ID,Name,LVUID,Notes,CreationDate,LastEditDate")] KS kS)
         {
             if (ModelState.IsValid)
             {
@@ -72,8 +83,7 @@ namespace ACSWeb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "ID", kS.LVUID);
-            ViewData["PipelineID"] = new SelectList(_context.Pipelines, "ID", "ID", kS.PipelineID);
+            ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "Name", kS.LVUID);
             return View(kS);
         }
 
@@ -91,7 +101,6 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
             ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "Name", kS.LVUID);
-            ViewData["PipelineID"] = new SelectList(_context.Pipelines, "ID", "ShortName", kS.PipelineID);
             return View(kS);
         }
 
@@ -100,7 +109,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,LVUID,PipelineID")] KS kS)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,LVUID,Notes,CreationDate,LastEditDate")] KS kS)
         {
             if (id != kS.ID)
             {
@@ -127,8 +136,7 @@ namespace ACSWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "ID", kS.LVUID);
-            ViewData["PipelineID"] = new SelectList(_context.Pipelines, "ID", "ID", kS.PipelineID);
+            ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "Name", kS.LVUID);
             return View(kS);
         }
 
@@ -142,7 +150,6 @@ namespace ACSWeb.Controllers
 
             var kS = await _context.KSs
                 .Include(k => k.LVU)
-                .Include(k => k.Pipeline)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (kS == null)
             {

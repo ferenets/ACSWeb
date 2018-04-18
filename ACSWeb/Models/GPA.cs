@@ -6,16 +6,23 @@ namespace ACSWeb.Models
     public class GPA
     {
         public int ID { get; set; }
-        public string Type { get; set; }
-        public string GTDType { get; set; }
-        public string VCNType { get; set; }
+        public string Name { get; set; }
+        public float Power { get; set; } //MW
+        public string EngineType { get; set; } //ГТД
+        public string EngineName { get; set; } //ДГ-90Л2
+        public string VCNName { get; set; } //650-22-2
         public int StationNumber { get; set; }
-        public string CompShopNumber { get; set; }
+        //public string CompShopName { get; set; } КС прирівнюмо до КЦ
+        //-------
+        public DateTime CreationDate { get; set; }
+        public DateTime LastEditDate { get; set; }
+        //-------
 
         public int KSID { get; set; }//foreign key
         //public int SAKID { get; set; } //foreign key
+        public string Notes { get; set; }  //Primechaniya
 
-        
+
 
         //----------------------------------------------------------------------
         public KS KS { get; set; } //navigation property

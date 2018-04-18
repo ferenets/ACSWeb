@@ -4,20 +4,29 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Перелік магістральних газопроводів</h2>
+<h2>Index</h2>
 
 <p>
-    <a asp-action="Create">Створити новий</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                Назва
-            </th>
-            <th>
-                Скорочена назва
-            </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShortName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Notes)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreationDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastEditDate)
+                </th>
             <th></th>
         </tr>
     </thead>
@@ -31,9 +40,18 @@
                 @Html.DisplayFor(modelItem => item.ShortName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Змінити</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Деталі</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Видалити</a>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastEditDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
             </td>
         </tr>
 }

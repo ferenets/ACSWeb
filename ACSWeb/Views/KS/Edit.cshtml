@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Змінити КС</h2>
+<h2>Edit</h2>
 
 <h4>KS</h4>
 <hr />
@@ -24,9 +24,19 @@
                 <span asp-validation-for="LVUID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PipelineID" class="control-label"></label>
-                <select asp-for="PipelineID" class="form-control" asp-items="ViewBag.PipelineID"></select>
-                <span asp-validation-for="PipelineID" class="text-danger"></span>
+                <label asp-for="Notes" class="control-label"></label>
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreationDate" class="control-label"></label>
+                <input asp-for="CreationDate" class="form-control" />
+                <span asp-validation-for="CreationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastEditDate" class="control-label"></label>
+                <input asp-for="LastEditDate" class="form-control" />
+                <span asp-validation-for="LastEditDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />

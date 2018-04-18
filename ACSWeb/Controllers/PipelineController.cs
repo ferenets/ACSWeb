@@ -7,13 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ACSWeb.Data;
 using ACSWeb.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 
 namespace ACSWeb.Controllers
 {
-    [Authorize]
     public class PipelineController : Controller
     {
         private readonly GTSContext _context;
@@ -58,7 +54,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,ShortName")] Pipeline pipeline)
+        public async Task<IActionResult> Create([Bind("ID,Name,ShortName,Notes,CreationDate,LastEditDate")] Pipeline pipeline)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +86,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ShortName")] Pipeline pipeline)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ShortName,Notes,CreationDate,LastEditDate")] Pipeline pipeline)
         {
             if (id != pipeline.ID)
             {
