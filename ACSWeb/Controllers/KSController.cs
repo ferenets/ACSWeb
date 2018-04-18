@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using ACSWeb.Data;
 using ACSWeb.Models;
 
 namespace ACSWeb.Controllers
 {
+    [Authorize]
     public class KSController : Controller
     {
         private readonly GTSContext _context;

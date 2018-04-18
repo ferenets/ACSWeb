@@ -12,22 +12,22 @@ using ACSWeb.Models;
 namespace ACSWeb.Controllers
 {
     [Authorize]
-    public class PipelineController : Controller
+    public class SAKTypeController : Controller
     {
         private readonly GTSContext _context;
 
-        public PipelineController(GTSContext context)
+        public SAKTypeController(GTSContext context)
         {
             _context = context;
         }
 
-        // GET: Pipeline
+        // GET: SAKType
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pipelines.ToListAsync());
+            return View(await _context.SAKTypes.ToListAsync());
         }
 
-        // GET: Pipeline/Details/5
+        // GET: SAKType/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,39 +35,39 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var pipeline = await _context.Pipelines
+            var sAKType = await _context.SAKTypes
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (pipeline == null)
+            if (sAKType == null)
             {
                 return NotFound();
             }
 
-            return View(pipeline);
+            return View(sAKType);
         }
 
-        // GET: Pipeline/Create
+        // GET: SAKType/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Pipeline/Create
+        // POST: SAKType/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,ShortName,Notes,CreationDate,LastEditDate")] Pipeline pipeline)
+        public async Task<IActionResult> Create([Bind("ID,TypeName,Notes")] SAKType sAKType)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(pipeline);
+                _context.Add(sAKType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(pipeline);
+            return View(sAKType);
         }
 
-        // GET: Pipeline/Edit/5
+        // GET: SAKType/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,22 +75,22 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var pipeline = await _context.Pipelines.SingleOrDefaultAsync(m => m.ID == id);
-            if (pipeline == null)
+            var sAKType = await _context.SAKTypes.SingleOrDefaultAsync(m => m.ID == id);
+            if (sAKType == null)
             {
                 return NotFound();
             }
-            return View(pipeline);
+            return View(sAKType);
         }
 
-        // POST: Pipeline/Edit/5
+        // POST: SAKType/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ShortName,Notes,CreationDate,LastEditDate")] Pipeline pipeline)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,TypeName,Notes")] SAKType sAKType)
         {
-            if (id != pipeline.ID)
+            if (id != sAKType.ID)
             {
                 return NotFound();
             }
@@ -99,12 +99,12 @@ namespace ACSWeb.Controllers
             {
                 try
                 {
-                    _context.Update(pipeline);
+                    _context.Update(sAKType);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PipelineExists(pipeline.ID))
+                    if (!SAKTypeExists(sAKType.ID))
                     {
                         return NotFound();
                     }
@@ -115,10 +115,10 @@ namespace ACSWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(pipeline);
+            return View(sAKType);
         }
 
-        // GET: Pipeline/Delete/5
+        // GET: SAKType/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,30 +126,30 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var pipeline = await _context.Pipelines
+            var sAKType = await _context.SAKTypes
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (pipeline == null)
+            if (sAKType == null)
             {
                 return NotFound();
             }
 
-            return View(pipeline);
+            return View(sAKType);
         }
 
-        // POST: Pipeline/Delete/5
+        // POST: SAKType/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var pipeline = await _context.Pipelines.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Pipelines.Remove(pipeline);
+            var sAKType = await _context.SAKTypes.SingleOrDefaultAsync(m => m.ID == id);
+            _context.SAKTypes.Remove(sAKType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PipelineExists(int id)
+        private bool SAKTypeExists(int id)
         {
-            return _context.Pipelines.Any(e => e.ID == id);
+            return _context.SAKTypes.Any(e => e.ID == id);
         }
     }
 }

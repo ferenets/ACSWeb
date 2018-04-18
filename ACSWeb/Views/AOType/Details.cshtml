@@ -1,4 +1,4 @@
-﻿@model ACSWeb.Models.KS
+﻿@model ACSWeb.Models.AOType
 
 @{
     ViewData["Title"] = "Details";
@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>KS</h4>
+    <h4>AOType</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -17,10 +17,22 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Notes)
+            @Html.DisplayNameFor(model => model.ShortName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Notes)
+            @Html.DisplayFor(model => model.ShortName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ControllerName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ControllerName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AOTableName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AOTableName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.CreationDate)
@@ -35,32 +47,10 @@
             @Html.DisplayFor(model => model.LastEditDate)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.LVU)
+            @Html.DisplayNameFor(model => model.Notes)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.LVU.Name)
-        </dd>
-        <dt>
-            Газопроводи
-        </dt>
- 
-@*foreach (var item in ViewData["PipelinesList"])
-{
-            <td>
-                Nazva
-            </td>
-            <dd>
-                @item.Name    @*Html.DisplayFor(item => item.PipelineList. Pipeline.)
-            </dd>
-
-      
-}*@
-
-
-
-
-
-            @*Html.DisplayFor(model => model.PipelineList.Name)*@
+            @Html.DisplayFor(model => model.Notes)
         </dd>
     </dl>
 </div>
