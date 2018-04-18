@@ -18,6 +18,11 @@ namespace ACSWeb.Data
         public DbSet<SAKType> SAKTypes { get; set; }
         public DbSet<Pipeline> Pipelines { get; set; }
         //public DbSet<ApplicationUser> Users { get; set; }   // Таблица для пользователей
+        public DbSet<AOType> AOTypes { get; set; } //Типы обьектов автоматизации (их описание и ссылки на соотв таблицы хранения)
+        public DbSet<PLC> PLCs { get; set; }
+
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) //переопределим формирование ИМЕН таблиц БД на следующие:
         {
@@ -30,8 +35,34 @@ namespace ACSWeb.Data
             modelBuilder.Entity<SAK>().ToTable("SAK");
             modelBuilder.Entity<SAKType>().ToTable("SAKType");
             modelBuilder.Entity<Pipeline>().ToTable("Pipeline");
-            //modelBuilder.Entity<ApplicationUser>().ToTable("Users"); // Таблица для пользователей
+            //modelBuilder.Entity<ApplicationUser>().ToTable("Users"); // Таблица для пользователей - не нужна т к тип ДБКонтекста - идентити
+            modelBuilder.Entity<AOType>().ToTable("AOType");
+            modelBuilder.Entity<PLC>().ToTable("PLC");
+
+
+            //--------------------------------------
+            modelBuilder.Entity<KS>()
+                .HasKey(x => x.ID);
+
+            modelBuilder.Entity<Pipeline>()
+                .HasKey(x => x.ID);
+
+            modelBuilder.Entity<KSPipeline>()
+                .HasKey(x => new { x.KSID, x.PipelineID });
+            modelBuilder.Entity<KSPipeline>()
+                .HasOne(x => x.KS)
+                .WithMany(m => m.PipelineList)
+                .HasForeignKey(x => x.KSID);
+            modelBuilder.Entity<KSPipeline>()
+                .HasOne(x => x.Pipeline)
+                .WithMany(e => e.KSList)
+                .HasForeignKey(x => x.PipelineID);
         }
+
+
+
+
+        public DbSet<ACSWeb.Models.KSPipeline> KSPipeline { get; set; }
 
 
     }

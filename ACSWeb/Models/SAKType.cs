@@ -9,6 +9,7 @@ namespace ACSWeb.Models
     {
         public int ID { get; set; }
         public string TypeName { get; set; }
+        public string Notes { get; set; }  //Primechaniya
 
     }
 }

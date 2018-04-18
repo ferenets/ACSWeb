@@ -18,7 +18,31 @@ namespace ACSWeb.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
+                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011");
+
+            modelBuilder.Entity("ACSWeb.Models.AOType", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AOTableName");
+
+                    b.Property<string>("ControllerName");
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<DateTime>("LastEditDate");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Notes");
+
+                    b.Property<string>("ShortName");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("AOType");
+                });
 
             modelBuilder.Entity("ACSWeb.Models.ApplicationUser", b =>
                 {
@@ -79,21 +103,33 @@ namespace ACSWeb.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CompShopNumber");
+                    b.Property<DateTime>("CreationDate");
 
-                    b.Property<string>("GTDType");
+                    b.Property<string>("EngineName");
+
+                    b.Property<string>("EngineType");
 
                     b.Property<int>("KSID");
 
+                    b.Property<DateTime>("LastEditDate");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Notes");
+
+                    b.Property<float>("Power");
+
+                    b.Property<int?>("SAKID");
+
                     b.Property<int>("StationNumber");
 
-                    b.Property<string>("Type");
-
-                    b.Property<string>("VCNType");
+                    b.Property<string>("VCNName");
 
                     b.HasKey("ID");
 
                     b.HasIndex("KSID");
+
+                    b.HasIndex("SAKID");
 
                     b.ToTable("GPA");
                 });
@@ -103,19 +139,34 @@ namespace ACSWeb.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("CreationDate");
+
                     b.Property<int>("LVUID");
+
+                    b.Property<DateTime>("LastEditDate");
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("PipelineID");
+                    b.Property<string>("Notes");
 
                     b.HasKey("ID");
 
                     b.HasIndex("LVUID");
 
+                    b.ToTable("KS");
+                });
+
+            modelBuilder.Entity("ACSWeb.Models.KSPipeline", b =>
+                {
+                    b.Property<int>("KSID");
+
+                    b.Property<int>("PipelineID");
+
+                    b.HasKey("KSID", "PipelineID");
+
                     b.HasIndex("PipelineID");
 
-                    b.ToTable("KS");
+                    b.ToTable("KSPipeline");
                 });
 
             modelBuilder.Entity("ACSWeb.Models.LVU", b =>
@@ -123,7 +174,13 @@ namespace ACSWeb.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<DateTime>("LastEditDate");
+
                     b.Property<string>("Name");
+
+                    b.Property<string>("Notes");
 
                     b.Property<int>("UMGID");
 
@@ -139,7 +196,13 @@ namespace ACSWeb.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<DateTime>("LastEditDate");
+
                     b.Property<string>("Name");
+
+                    b.Property<string>("Notes");
 
                     b.Property<string>("ShortName");
 
@@ -148,20 +211,48 @@ namespace ACSWeb.Migrations
                     b.ToTable("Pipeline");
                 });
 
+            modelBuilder.Entity("ACSWeb.Models.PLC", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<DateTime>("LastEditDate");
+
+                    b.Property<string>("Manufacturer");
+
+                    b.Property<string>("ModelName");
+
+                    b.Property<string>("Notes");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("PLC");
+                });
+
             modelBuilder.Entity("ACSWeb.Models.SAK", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("AOID");
+
+                    b.Property<int>("AOTypeID");
+
                     b.Property<DateTime>("CommisioningDate");
 
-                    b.Property<int>("GPAID");
+                    b.Property<DateTime>("CreationDate");
 
-                    b.Property<string>("MTBase");
+                    b.Property<DateTime>("LastEditDate");
 
                     b.Property<string>("Manufacturer");
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("Notes");
+
+                    b.Property<int>("PLCID");
 
                     b.Property<int>("SAKTypeID");
 
@@ -169,8 +260,9 @@ namespace ACSWeb.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("GPAID")
-                        .IsUnique();
+                    b.HasIndex("AOTypeID");
+
+                    b.HasIndex("PLCID");
 
                     b.HasIndex("SAKTypeID");
 
@@ -181,6 +273,8 @@ namespace ACSWeb.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Notes");
 
                     b.Property<string>("TypeName");
 
@@ -196,7 +290,13 @@ namespace ACSWeb.Migrations
 
                     b.Property<string>("City");
 
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<DateTime>("LastEditDate");
+
                     b.Property<string>("Name");
+
+                    b.Property<string>("Notes");
 
                     b.Property<string>("ShortName");
 
@@ -318,6 +418,10 @@ namespace ACSWeb.Migrations
                         .WithMany("GPAList")
                         .HasForeignKey("KSID")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ACSWeb.Models.SAK", "SAK")
+                        .WithMany()
+                        .HasForeignKey("SAKID");
                 });
 
             modelBuilder.Entity("ACSWeb.Models.KS", b =>
@@ -325,6 +429,14 @@ namespace ACSWeb.Migrations
                     b.HasOne("ACSWeb.Models.LVU", "LVU")
                         .WithMany("KSList")
                         .HasForeignKey("LVUID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ACSWeb.Models.KSPipeline", b =>
+                {
+                    b.HasOne("ACSWeb.Models.KS", "KS")
+                        .WithMany("PipelineList")
+                        .HasForeignKey("KSID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ACSWeb.Models.Pipeline", "Pipeline")
@@ -343,9 +455,14 @@ namespace ACSWeb.Migrations
 
             modelBuilder.Entity("ACSWeb.Models.SAK", b =>
                 {
-                    b.HasOne("ACSWeb.Models.GPA", "GPA")
-                        .WithOne("SAK")
-                        .HasForeignKey("ACSWeb.Models.SAK", "GPAID")
+                    b.HasOne("ACSWeb.Models.AOType", "AOType")
+                        .WithMany()
+                        .HasForeignKey("AOTypeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ACSWeb.Models.PLC", "PLC")
+                        .WithMany()
+                        .HasForeignKey("PLCID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ACSWeb.Models.SAKType", "SAKType")

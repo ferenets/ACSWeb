@@ -1,12 +1,12 @@
 ﻿@model ACSWeb.Models.Pipeline
 
 @{
-    ViewData["Title"] = "Редагування";
+    ViewData["Title"] = "Edit";
 }
 
-<h2>Змінити</h2>
+<h2>Edit</h2>
 
-<h4>Газопровід</h4>
+<h4>Pipeline</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -24,6 +24,21 @@
                 <span asp-validation-for="ShortName" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Notes" class="control-label"></label>
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreationDate" class="control-label"></label>
+                <input asp-for="CreationDate" class="form-control" />
+                <span asp-validation-for="CreationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastEditDate" class="control-label"></label>
+                <input asp-for="LastEditDate" class="form-control" />
+                <span asp-validation-for="LastEditDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
@@ -31,7 +46,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Назад до переліку</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

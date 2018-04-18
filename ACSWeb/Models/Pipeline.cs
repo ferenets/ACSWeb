@@ -10,7 +10,12 @@ namespace ACSWeb.Models
         public int ID { get; set; }
         public string Name { get; set; }
         public string ShortName { get; set; }
-        //public ICollection<int> KSIDList { get; set; } //navigation property
-        public ICollection<KS> KSList { get; set; } //navigation property
+        public string Notes { get; set; }  //Primechaniya
+
+
+        public DateTime CreationDate { get; set; }
+        public DateTime LastEditDate { get; set; }
+        public ICollection<KSPipeline> KSList { get; set; } //navigation property
+        //public ICollection<KS> KSList { get; set; } //navigation property
     }
 }

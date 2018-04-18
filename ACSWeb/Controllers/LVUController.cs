@@ -7,13 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ACSWeb.Data;
 using ACSWeb.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 
 namespace ACSWeb.Controllers
 {
-    [Authorize]
     public class LVUController : Controller
     {
         private readonly GTSContext _context;
@@ -52,8 +48,7 @@ namespace ACSWeb.Controllers
         // GET: LVU/Create
         public IActionResult Create()
         {
-            ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "Name");  //Подгрузка значений для списка при создании   ValueField & TextFievd for SelectionList!   //OR == ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "ID");
-            //ViewData["UMGname"] = new SelectList(_context.UMGs, "Name", "Name");
+            ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "Name");
             return View();
         }
 
@@ -62,7 +57,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,UMGID")] LVU lVU)
+        public async Task<IActionResult> Create([Bind("ID,Name,UMGID,Notes,CreationDate,LastEditDate")] LVU lVU)
         {
             if (ModelState.IsValid)
             {
@@ -70,7 +65,7 @@ namespace ACSWeb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "ID", lVU.UMGID);
+            ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "Name", lVU.UMGID);
             return View(lVU);
         }
 
@@ -87,7 +82,7 @@ namespace ACSWeb.Controllers
             {
                 return NotFound();
             }
-            ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "Name", lVU.UMGID);  //OR==ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "ID", lVU.UMGID);
+            ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "Name", lVU.UMGID);
             return View(lVU);
         }
 
@@ -96,7 +91,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,UMGID")] LVU lVU)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,UMGID,Notes,CreationDate,LastEditDate")] LVU lVU)
         {
             if (id != lVU.ID)
             {
@@ -123,7 +118,7 @@ namespace ACSWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "ID", lVU.UMGID);
+            ViewData["UMGID"] = new SelectList(_context.UMGs, "ID", "Name", lVU.UMGID);
             return View(lVU);
         }
 

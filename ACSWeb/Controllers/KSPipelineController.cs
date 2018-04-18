@@ -7,29 +7,26 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ACSWeb.Data;
 using ACSWeb.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 
 namespace ACSWeb.Controllers
 {
-    [Authorize]
-    public class SAKTypeController : Controller
+    public class KSPipelineController : Controller
     {
         private readonly GTSContext _context;
 
-        public SAKTypeController(GTSContext context)
+        public KSPipelineController(GTSContext context)
         {
             _context = context;
         }
 
-        // GET: SAKType
+        // GET: KSPipeline
         public async Task<IActionResult> Index()
         {
-            return View(await _context.SAKTypes.ToListAsync());
+            var gTSContext = _context.KSPipeline.Include(k => k.KS).Include(k => k.Pipeline);
+            return View(await gTSContext.ToListAsync());
         }
 
-        // GET: SAKType/Details/5
+        // GET: KSPipeline/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,39 +34,45 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var sAKType = await _context.SAKTypes
-                .SingleOrDefaultAsync(m => m.ID == id);
-            if (sAKType == null)
+            var kSPipeline = await _context.KSPipeline
+                .Include(k => k.KS)
+                .Include(k => k.Pipeline)
+                .SingleOrDefaultAsync(m => m.KSID == id);
+            if (kSPipeline == null)
             {
                 return NotFound();
             }
 
-            return View(sAKType);
+            return View(kSPipeline);
         }
 
-        // GET: SAKType/Create
+        // GET: KSPipeline/Create
         public IActionResult Create()
         {
+            ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name");
+            ViewData["PipelineID"] = new SelectList(_context.Pipelines, "ID", "Name");
             return View();
         }
 
-        // POST: SAKType/Create
+        // POST: KSPipeline/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,TypeName")] SAKType sAKType)
+        public async Task<IActionResult> Create([Bind("KSID,PipelineID")] KSPipeline kSPipeline)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(sAKType);
+                _context.Add(kSPipeline);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(sAKType);
+            ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name", kSPipeline.KSID);
+            ViewData["PipelineID"] = new SelectList(_context.Pipelines, "ID", "Name", kSPipeline.PipelineID);
+            return View(kSPipeline);
         }
 
-        // GET: SAKType/Edit/5
+        // GET: KSPipeline/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,22 +80,24 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var sAKType = await _context.SAKTypes.SingleOrDefaultAsync(m => m.ID == id);
-            if (sAKType == null)
+            var kSPipeline = await _context.KSPipeline.SingleOrDefaultAsync(m => m.KSID == id);
+            if (kSPipeline == null)
             {
                 return NotFound();
             }
-            return View(sAKType);
+            ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name", kSPipeline.KSID);
+            ViewData["PipelineID"] = new SelectList(_context.Pipelines, "ID", "Name", kSPipeline.PipelineID);
+            return View(kSPipeline);
         }
 
-        // POST: SAKType/Edit/5
+        // POST: KSPipeline/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,TypeName")] SAKType sAKType)
+        public async Task<IActionResult> Edit(int id, [Bind("KSID,PipelineID")] KSPipeline kSPipeline)
         {
-            if (id != sAKType.ID)
+            if (id != kSPipeline.KSID)
             {
                 return NotFound();
             }
@@ -101,12 +106,12 @@ namespace ACSWeb.Controllers
             {
                 try
                 {
-                    _context.Update(sAKType);
+                    _context.Update(kSPipeline);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SAKTypeExists(sAKType.ID))
+                    if (!KSPipelineExists(kSPipeline.KSID))
                     {
                         return NotFound();
                     }
@@ -117,10 +122,12 @@ namespace ACSWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(sAKType);
+            ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name", kSPipeline.KSID);
+            ViewData["PipelineID"] = new SelectList(_context.Pipelines, "ID", "Name", kSPipeline.PipelineID);
+            return View(kSPipeline);
         }
 
-        // GET: SAKType/Delete/5
+        // GET: KSPipeline/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -128,30 +135,32 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var sAKType = await _context.SAKTypes
-                .SingleOrDefaultAsync(m => m.ID == id);
-            if (sAKType == null)
+            var kSPipeline = await _context.KSPipeline
+                .Include(k => k.KS)
+                .Include(k => k.Pipeline)
+                .SingleOrDefaultAsync(m => m.KSID == id);
+            if (kSPipeline == null)
             {
                 return NotFound();
             }
 
-            return View(sAKType);
+            return View(kSPipeline);
         }
 
-        // POST: SAKType/Delete/5
+        // POST: KSPipeline/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var sAKType = await _context.SAKTypes.SingleOrDefaultAsync(m => m.ID == id);
-            _context.SAKTypes.Remove(sAKType);
+            var kSPipeline = await _context.KSPipeline.SingleOrDefaultAsync(m => m.KSID == id);
+            _context.KSPipeline.Remove(kSPipeline);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SAKTypeExists(int id)
+        private bool KSPipelineExists(int id)
         {
-            return _context.SAKTypes.Any(e => e.ID == id);
+            return _context.KSPipeline.Any(e => e.KSID == id);
         }
     }
 }
