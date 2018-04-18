@@ -1,0 +1,64 @@
+﻿@model ACSWeb.Models.AOType
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>AOType</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShortName" class="control-label"></label>
+                <input asp-for="ShortName" class="form-control" />
+                <span asp-validation-for="ShortName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ControllerName" class="control-label"></label>
+                <input asp-for="ControllerName" class="form-control" />
+                <span asp-validation-for="ControllerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AOTableName" class="control-label"></label>
+                <input asp-for="AOTableName" class="form-control" />
+                <span asp-validation-for="AOTableName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreationDate" class="control-label"></label>
+                <input asp-for="CreationDate" class="form-control" />
+                <span asp-validation-for="CreationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastEditDate" class="control-label"></label>
+                <input asp-for="LastEditDate" class="form-control" />
+                <span asp-validation-for="LastEditDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes" class="control-label"></label>
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

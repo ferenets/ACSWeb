@@ -1,0 +1,63 @@
+﻿@model ACSWeb.Models.AOType
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>AOType</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ShortName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ShortName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ControllerName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ControllerName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AOTableName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AOTableName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastEditDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastEditDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
