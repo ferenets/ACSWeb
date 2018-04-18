@@ -12,22 +12,23 @@ using ACSWeb.Models;
 namespace ACSWeb.Controllers
 {
     [Authorize]
-    public class UMGController : Controller
+    public class SAKController : Controller
     {
         private readonly GTSContext _context;
 
-        public UMGController(GTSContext context)
+        public SAKController(GTSContext context)
         {
             _context = context;
         }
 
-        // GET: UMG
+        // GET: SAK
         public async Task<IActionResult> Index()
         {
-            return View(await _context.UMGs.ToListAsync());
+            var gTSContext = _context.SAKs.Include(s => s.AOType).Include(s => s.PLC).Include(s => s.SAKType);
+            return View(await gTSContext.ToListAsync());
         }
 
-        // GET: UMG/Details/5
+        // GET: SAK/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,41 +36,48 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var uMG = await _context.UMGs
+            var sAK = await _context.SAKs
+                .Include(s => s.AOType)
+                .Include(s => s.PLC)
+                .Include(s => s.SAKType)
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (uMG == null)
+            if (sAK == null)
             {
                 return NotFound();
             }
 
-            return View(uMG);
+            return View(sAK);
         }
 
-        // GET: UMG/Create
+        // GET: SAK/Create
         public IActionResult Create()
         {
+            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name");
+            ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "ModelName");
+            ViewData["SAKTypeID"] = new SelectList(_context.SAKTypes, "ID", "Name");
             return View();
         }
 
-        // POST: UMG/Create
+        // POST: SAK/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,ShortName,City,Notes")] UMG uMG)
+        public async Task<IActionResult> Create([Bind("ID,Name,PLCID,Manufacturer,Seller,CommisioningDate,AOTypeID,AOID,SAKTypeID,Notes,CreationDate,LastEditDate")] SAK sAK)
         {
             if (ModelState.IsValid)
             {
-                uMG.CreationDate = DateTime.Now;
-
-                _context.Add(uMG);
+                _context.Add(sAK);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(uMG);
+            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", sAK.AOTypeID);
+            ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "ModelName", sAK.PLCID);
+            ViewData["SAKTypeID"] = new SelectList(_context.SAKTypes, "ID", "Name", sAK.SAKTypeID);
+            return View(sAK);
         }
 
-        // GET: UMG/Edit/5
+        // GET: SAK/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,22 +85,25 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var uMG = await _context.UMGs.SingleOrDefaultAsync(m => m.ID == id);
-            if (uMG == null)
+            var sAK = await _context.SAKs.SingleOrDefaultAsync(m => m.ID == id);
+            if (sAK == null)
             {
                 return NotFound();
             }
-            return View(uMG);
+            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", sAK.AOTypeID);
+            ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "ModelName", sAK.PLCID);
+            ViewData["SAKTypeID"] = new SelectList(_context.SAKTypes, "ID", "Name", sAK.SAKTypeID);
+            return View(sAK);
         }
 
-        // POST: UMG/Edit/5
+        // POST: SAK/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ShortName,City,Notes")] UMG uMG)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,PLCID,Manufacturer,Seller,CommisioningDate,AOTypeID,AOID,SAKTypeID,Notes,CreationDate,LastEditDate")] SAK sAK)
         {
-            if (id != uMG.ID)
+            if (id != sAK.ID)
             {
                 return NotFound();
             }
@@ -101,13 +112,12 @@ namespace ACSWeb.Controllers
             {
                 try
                 {
-                    uMG.LastEditDate = DateTime.Now;
-                    _context.Update(uMG);
+                    _context.Update(sAK);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UMGExists(uMG.ID))
+                    if (!SAKExists(sAK.ID))
                     {
                         return NotFound();
                     }
@@ -118,10 +128,13 @@ namespace ACSWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(uMG);
+            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", sAK.AOTypeID);
+            ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "ModelName", sAK.PLCID);
+            ViewData["SAKTypeID"] = new SelectList(_context.SAKTypes, "ID", "Name", sAK.SAKTypeID);
+            return View(sAK);
         }
 
-        // GET: UMG/Delete/5
+        // GET: SAK/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,30 +142,33 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var uMG = await _context.UMGs
+            var sAK = await _context.SAKs
+                .Include(s => s.AOType)
+                .Include(s => s.PLC)
+                .Include(s => s.SAKType)
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (uMG == null)
+            if (sAK == null)
             {
                 return NotFound();
             }
 
-            return View(uMG);
+            return View(sAK);
         }
 
-        // POST: UMG/Delete/5
+        // POST: SAK/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var uMG = await _context.UMGs.SingleOrDefaultAsync(m => m.ID == id);
-            _context.UMGs.Remove(uMG);
+            var sAK = await _context.SAKs.SingleOrDefaultAsync(m => m.ID == id);
+            _context.SAKs.Remove(sAK);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UMGExists(int id)
+        private bool SAKExists(int id)
         {
-            return _context.UMGs.Any(e => e.ID == id);
+            return _context.SAKs.Any(e => e.ID == id);
         }
     }
 }

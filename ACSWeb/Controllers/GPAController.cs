@@ -12,22 +12,23 @@ using ACSWeb.Models;
 namespace ACSWeb.Controllers
 {
     [Authorize]
-    public class UMGController : Controller
+    public class GPAController : Controller
     {
         private readonly GTSContext _context;
 
-        public UMGController(GTSContext context)
+        public GPAController(GTSContext context)
         {
             _context = context;
         }
 
-        // GET: UMG
+        // GET: GPA
         public async Task<IActionResult> Index()
         {
-            return View(await _context.UMGs.ToListAsync());
+            var gTSContext = _context.GPAs.Include(g => g.KS);
+            return View(await gTSContext.ToListAsync());
         }
 
-        // GET: UMG/Details/5
+        // GET: GPA/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,41 +36,42 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var uMG = await _context.UMGs
+            var gPA = await _context.GPAs
+                .Include(g => g.KS)
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (uMG == null)
+            if (gPA == null)
             {
                 return NotFound();
             }
 
-            return View(uMG);
+            return View(gPA);
         }
 
-        // GET: UMG/Create
+        // GET: GPA/Create
         public IActionResult Create()
         {
+            ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name");
             return View();
         }
 
-        // POST: UMG/Create
+        // POST: GPA/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,ShortName,City,Notes")] UMG uMG)
+        public async Task<IActionResult> Create([Bind("ID,Name,Power,EngineType,EngineName,VCNName,StationNumber,CreationDate,LastEditDate,KSID,Notes")] GPA gPA)
         {
             if (ModelState.IsValid)
             {
-                uMG.CreationDate = DateTime.Now;
-
-                _context.Add(uMG);
+                _context.Add(gPA);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(uMG);
+            ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name", gPA.KSID);
+            return View(gPA);
         }
 
-        // GET: UMG/Edit/5
+        // GET: GPA/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,22 +79,23 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var uMG = await _context.UMGs.SingleOrDefaultAsync(m => m.ID == id);
-            if (uMG == null)
+            var gPA = await _context.GPAs.SingleOrDefaultAsync(m => m.ID == id);
+            if (gPA == null)
             {
                 return NotFound();
             }
-            return View(uMG);
+            ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name", gPA.KSID);
+            return View(gPA);
         }
 
-        // POST: UMG/Edit/5
+        // POST: GPA/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ShortName,City,Notes")] UMG uMG)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Power,EngineType,EngineName,VCNName,StationNumber,CreationDate,LastEditDate,KSID,Notes")] GPA gPA)
         {
-            if (id != uMG.ID)
+            if (id != gPA.ID)
             {
                 return NotFound();
             }
@@ -101,13 +104,12 @@ namespace ACSWeb.Controllers
             {
                 try
                 {
-                    uMG.LastEditDate = DateTime.Now;
-                    _context.Update(uMG);
+                    _context.Update(gPA);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UMGExists(uMG.ID))
+                    if (!GPAExists(gPA.ID))
                     {
                         return NotFound();
                     }
@@ -118,10 +120,11 @@ namespace ACSWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(uMG);
+            ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name", gPA.KSID);
+            return View(gPA);
         }
 
-        // GET: UMG/Delete/5
+        // GET: GPA/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,30 +132,31 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var uMG = await _context.UMGs
+            var gPA = await _context.GPAs
+                .Include(g => g.KS)
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (uMG == null)
+            if (gPA == null)
             {
                 return NotFound();
             }
 
-            return View(uMG);
+            return View(gPA);
         }
 
-        // POST: UMG/Delete/5
+        // POST: GPA/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var uMG = await _context.UMGs.SingleOrDefaultAsync(m => m.ID == id);
-            _context.UMGs.Remove(uMG);
+            var gPA = await _context.GPAs.SingleOrDefaultAsync(m => m.ID == id);
+            _context.GPAs.Remove(gPA);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UMGExists(int id)
+        private bool GPAExists(int id)
         {
-            return _context.UMGs.Any(e => e.ID == id);
+            return _context.GPAs.Any(e => e.ID == id);
         }
     }
 }

@@ -41,22 +41,22 @@ namespace ACSWeb.Data
 
 
             //--------------------------------------
-            modelBuilder.Entity<KS>()
-                .HasKey(x => x.ID);
+            //modelBuilder.Entity<KS>()
+            //    .HasKey(x => x.ID);
 
-            modelBuilder.Entity<Pipeline>()
-                .HasKey(x => x.ID);
+            //modelBuilder.Entity<Pipeline>()
+            //    .HasKey(x => x.ID);
 
-            modelBuilder.Entity<KSPipeline>()
-                .HasKey(x => new { x.KSID, x.PipelineID });
-            modelBuilder.Entity<KSPipeline>()
-                .HasOne(x => x.KS)
-                .WithMany(m => m.PipelineList)
-                .HasForeignKey(x => x.KSID);
-            modelBuilder.Entity<KSPipeline>()
-                .HasOne(x => x.Pipeline)
-                .WithMany(e => e.KSList)
-                .HasForeignKey(x => x.PipelineID);
+            //modelBuilder.Entity<KSPipeline>()
+            //    .HasKey(x => new { x.KSID, x.PipelineID });
+            //modelBuilder.Entity<KSPipeline>()
+            //    .HasOne(x => x.KS)
+            //    .WithMany(m => m.PipelineList)
+            //    .HasForeignKey(x => x.KSID);
+            //modelBuilder.Entity<KSPipeline>()
+            //    .HasOne(x => x.Pipeline)
+            //    .WithMany(e => e.KSList)
+            //    .HasForeignKey(x => x.PipelineID);
         }
 
 

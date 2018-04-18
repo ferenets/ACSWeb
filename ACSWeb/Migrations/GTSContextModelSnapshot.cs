@@ -158,11 +158,20 @@ namespace ACSWeb.Migrations
 
             modelBuilder.Entity("ACSWeb.Models.KSPipeline", b =>
                 {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreationDate");
+
                     b.Property<int>("KSID");
+
+                    b.Property<DateTime>("LastEditDate");
 
                     b.Property<int>("PipelineID");
 
-                    b.HasKey("KSID", "PipelineID");
+                    b.HasKey("ID");
+
+                    b.HasIndex("KSID");
 
                     b.HasIndex("PipelineID");
 

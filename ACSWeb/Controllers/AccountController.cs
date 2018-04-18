@@ -62,6 +62,13 @@ namespace ACSWeb.Controllers
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var user = await _signInManager.UserManager.FindByEmailAsync(model.Email); //Поис обьекта юзера по Емэйлу
+                //----------------------------------
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "No such user.");
+                    return View(model);
+                }
+                //-----------------------------------------
                 var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: true);  //Попытка входа не через имейл, а через имя пользователя
                 if (result.Succeeded)
                 {

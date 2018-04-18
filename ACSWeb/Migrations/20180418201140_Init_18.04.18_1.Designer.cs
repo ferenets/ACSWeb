@@ -11,8 +11,8 @@ using System;
 namespace ACSWeb.Migrations
 {
     [DbContext(typeof(GTSContext))]
-    [Migration("20180418110006_Init_18.04.18")]
-    partial class Init_180418
+    [Migration("20180418201140_Init_18.04.18_1")]
+    partial class Init_180418_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -159,11 +159,20 @@ namespace ACSWeb.Migrations
 
             modelBuilder.Entity("ACSWeb.Models.KSPipeline", b =>
                 {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreationDate");
+
                     b.Property<int>("KSID");
+
+                    b.Property<DateTime>("LastEditDate");
 
                     b.Property<int>("PipelineID");
 
-                    b.HasKey("KSID", "PipelineID");
+                    b.HasKey("ID");
+
+                    b.HasIndex("KSID");
 
                     b.HasIndex("PipelineID");
 

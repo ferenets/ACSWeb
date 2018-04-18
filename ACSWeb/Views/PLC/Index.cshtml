@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ACSWeb.Models.KSPipeline>
+﻿@model IEnumerable<ACSWeb.Models.PLC>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,17 +13,20 @@
     <thead>
         <tr>
                 <th>
+                    @Html.DisplayNameFor(model => model.Manufacturer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ModelName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Notes)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.CreationDate)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.LastEditDate)
                 </th>
-            <th>
-                @Html.DisplayNameFor(model => model.KS)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pipeline)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -31,16 +34,19 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Manufacturer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.CreationDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LastEditDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.KS.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pipeline.ID)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

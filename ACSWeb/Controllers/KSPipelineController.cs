@@ -39,7 +39,7 @@ namespace ACSWeb.Controllers
             var kSPipeline = await _context.KSPipeline
                 .Include(k => k.KS)
                 .Include(k => k.Pipeline)
-                .SingleOrDefaultAsync(m => m.KSID == id);
+                .SingleOrDefaultAsync(m => m.ID == id);
             if (kSPipeline == null)
             {
                 return NotFound();
@@ -61,7 +61,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("KSID,PipelineID")] KSPipeline kSPipeline)
+        public async Task<IActionResult> Create([Bind("ID,KSID,PipelineID,CreationDate,LastEditDate")] KSPipeline kSPipeline)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var kSPipeline = await _context.KSPipeline.SingleOrDefaultAsync(m => m.KSID == id);
+            var kSPipeline = await _context.KSPipeline.SingleOrDefaultAsync(m => m.ID == id);
             if (kSPipeline == null)
             {
                 return NotFound();
@@ -97,9 +97,9 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("KSID,PipelineID")] KSPipeline kSPipeline)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,KSID,PipelineID,CreationDate,LastEditDate")] KSPipeline kSPipeline)
         {
-            if (id != kSPipeline.KSID)
+            if (id != kSPipeline.ID)
             {
                 return NotFound();
             }
@@ -113,7 +113,7 @@ namespace ACSWeb.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!KSPipelineExists(kSPipeline.KSID))
+                    if (!KSPipelineExists(kSPipeline.ID))
                     {
                         return NotFound();
                     }
@@ -140,7 +140,7 @@ namespace ACSWeb.Controllers
             var kSPipeline = await _context.KSPipeline
                 .Include(k => k.KS)
                 .Include(k => k.Pipeline)
-                .SingleOrDefaultAsync(m => m.KSID == id);
+                .SingleOrDefaultAsync(m => m.ID == id);
             if (kSPipeline == null)
             {
                 return NotFound();
@@ -154,7 +154,7 @@ namespace ACSWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var kSPipeline = await _context.KSPipeline.SingleOrDefaultAsync(m => m.KSID == id);
+            var kSPipeline = await _context.KSPipeline.SingleOrDefaultAsync(m => m.ID == id);
             _context.KSPipeline.Remove(kSPipeline);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -162,7 +162,7 @@ namespace ACSWeb.Controllers
 
         private bool KSPipelineExists(int id)
         {
-            return _context.KSPipeline.Any(e => e.KSID == id);
+            return _context.KSPipeline.Any(e => e.ID == id);
         }
     }
 }

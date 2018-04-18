@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ACSWeb.Migrations
 {
-    public partial class Init_180418 : Migration
+    public partial class Init_180418_1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -367,12 +367,16 @@ namespace ACSWeb.Migrations
                 name: "KSPipeline",
                 columns: table => new
                 {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    CreationDate = table.Column<DateTime>(nullable: false),
                     KSID = table.Column<int>(nullable: false),
+                    LastEditDate = table.Column<DateTime>(nullable: false),
                     PipelineID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_KSPipeline", x => new { x.KSID, x.PipelineID });
+                    table.PrimaryKey("PK_KSPipeline", x => x.ID);
                     table.ForeignKey(
                         name: "FK_KSPipeline_KS_KSID",
                         column: x => x.KSID,
@@ -438,6 +442,11 @@ namespace ACSWeb.Migrations
                 name: "IX_KS_LVUID",
                 table: "KS",
                 column: "LVUID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_KSPipeline_KSID",
+                table: "KSPipeline",
+                column: "KSID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_KSPipeline_PipelineID",

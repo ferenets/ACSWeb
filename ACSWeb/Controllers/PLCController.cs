@@ -12,22 +12,22 @@ using ACSWeb.Models;
 namespace ACSWeb.Controllers
 {
     [Authorize]
-    public class UMGController : Controller
+    public class PLCController : Controller
     {
         private readonly GTSContext _context;
 
-        public UMGController(GTSContext context)
+        public PLCController(GTSContext context)
         {
             _context = context;
         }
 
-        // GET: UMG
+        // GET: PLC
         public async Task<IActionResult> Index()
         {
-            return View(await _context.UMGs.ToListAsync());
+            return View(await _context.PLCs.ToListAsync());
         }
 
-        // GET: UMG/Details/5
+        // GET: PLC/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,41 +35,39 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var uMG = await _context.UMGs
+            var pLC = await _context.PLCs
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (uMG == null)
+            if (pLC == null)
             {
                 return NotFound();
             }
 
-            return View(uMG);
+            return View(pLC);
         }
 
-        // GET: UMG/Create
+        // GET: PLC/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: UMG/Create
+        // POST: PLC/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,ShortName,City,Notes")] UMG uMG)
+        public async Task<IActionResult> Create([Bind("ID,Manufacturer,ModelName,Notes,CreationDate,LastEditDate")] PLC pLC)
         {
             if (ModelState.IsValid)
             {
-                uMG.CreationDate = DateTime.Now;
-
-                _context.Add(uMG);
+                _context.Add(pLC);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(uMG);
+            return View(pLC);
         }
 
-        // GET: UMG/Edit/5
+        // GET: PLC/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,22 +75,22 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var uMG = await _context.UMGs.SingleOrDefaultAsync(m => m.ID == id);
-            if (uMG == null)
+            var pLC = await _context.PLCs.SingleOrDefaultAsync(m => m.ID == id);
+            if (pLC == null)
             {
                 return NotFound();
             }
-            return View(uMG);
+            return View(pLC);
         }
 
-        // POST: UMG/Edit/5
+        // POST: PLC/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ShortName,City,Notes")] UMG uMG)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Manufacturer,ModelName,Notes,CreationDate,LastEditDate")] PLC pLC)
         {
-            if (id != uMG.ID)
+            if (id != pLC.ID)
             {
                 return NotFound();
             }
@@ -101,13 +99,12 @@ namespace ACSWeb.Controllers
             {
                 try
                 {
-                    uMG.LastEditDate = DateTime.Now;
-                    _context.Update(uMG);
+                    _context.Update(pLC);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UMGExists(uMG.ID))
+                    if (!PLCExists(pLC.ID))
                     {
                         return NotFound();
                     }
@@ -118,10 +115,10 @@ namespace ACSWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(uMG);
+            return View(pLC);
         }
 
-        // GET: UMG/Delete/5
+        // GET: PLC/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,30 +126,30 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var uMG = await _context.UMGs
+            var pLC = await _context.PLCs
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (uMG == null)
+            if (pLC == null)
             {
                 return NotFound();
             }
 
-            return View(uMG);
+            return View(pLC);
         }
 
-        // POST: UMG/Delete/5
+        // POST: PLC/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var uMG = await _context.UMGs.SingleOrDefaultAsync(m => m.ID == id);
-            _context.UMGs.Remove(uMG);
+            var pLC = await _context.PLCs.SingleOrDefaultAsync(m => m.ID == id);
+            _context.PLCs.Remove(pLC);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UMGExists(int id)
+        private bool PLCExists(int id)
         {
-            return _context.UMGs.Any(e => e.ID == id);
+            return _context.PLCs.Any(e => e.ID == id);
         }
     }
 }
