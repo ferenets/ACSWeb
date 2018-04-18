@@ -9,7 +9,7 @@ namespace ACSWeb.Models
     {
         public int ID { get; set; }
         public string Manufacturer { get; set; } //Siemens, Schneider
-        public string ModelName { get; set; } //S7-410
+        public string Name { get; set; } //S7-410
         //public string SerieName { get; set; } //S7-400
 
         public string Notes { get; set; }  //Primechaniya
