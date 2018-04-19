@@ -68,8 +68,40 @@
             @Html.DisplayNameFor(model => model.KS)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.KS.ID)
+            @Html.DisplayFor(model => model.KS.Name)
         </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AOType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AOType.Name)
+        </dd>
+
+        <dt>
+            САК
+        </dt>
+
+        @if (ViewData["SAKName"] != null)
+    {
+        <dd>
+            @ViewData["SAKName"] <a asp-controller="SAK" asp-action="Details" asp-route-gpaid="@ViewData["SAKID"]">Деталі САК</a>
+        </dd>
+}
+else
+{
+    <dd>
+        Значення відсутнє.
+        <a asp-controller="SAK" asp-action="Create" asp-route-aoid="@Model.ID" asp-route-aotypeid="@Model.AOTypeID">Додати САК</a> @*Передача gpaid в функцию Create контроллера SAK*@
+
+
+    </dd>
+}
+
+
+
+
+
     </dl>
 </div>
 <div>

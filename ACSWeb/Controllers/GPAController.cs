@@ -24,7 +24,7 @@ namespace ACSWeb.Controllers
         // GET: GPA
         public async Task<IActionResult> Index()
         {
-            var gTSContext = _context.GPAs.Include(g => g.KS);
+            var gTSContext = _context.GPAs.Include(g => g.KS).Include(aot=>aot.AOType); //
             return View(await gTSContext.ToListAsync());
         }
 
@@ -38,11 +38,21 @@ namespace ACSWeb.Controllers
 
             var gPA = await _context.GPAs
                 .Include(g => g.KS)
+                .Include(aot => aot.AOType)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (gPA == null)
             {
                 return NotFound();
             }
+            //-----Ищем САУ для этого ГПА:
+            var SAKofGPA = await _context.SAKs.SingleOrDefaultAsync(g => g.AOID == id);
+            if (SAKofGPA != null)
+            {
+                ViewData["SAKName"] = SAKofGPA.Name;
+                ViewData["SAKID"] = SAKofGPA.ID;
+            }
+            //--------------
+
 
             return View(gPA);
         }
@@ -51,6 +61,7 @@ namespace ACSWeb.Controllers
         public IActionResult Create()
         {
             ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name");
+            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name");
             return View();
         }
 
@@ -59,7 +70,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Power,EngineType,EngineName,VCNName,StationNumber,KSID,Notes")] GPA gPA)
+        public async Task<IActionResult> Create([Bind("ID,Name,Power,EngineType,EngineName,VCNName,StationNumber,KSID,AOTypeID,Notes")] GPA gPA)
         {
             if (ModelState.IsValid)
             {
@@ -70,6 +81,8 @@ namespace ACSWeb.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name", gPA.KSID);
+            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", gPA.AOTypeID);
+
             return View(gPA);
         }
 

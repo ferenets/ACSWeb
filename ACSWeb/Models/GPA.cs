@@ -19,7 +19,8 @@ namespace ACSWeb.Models
         //-------
 
         public int KSID { get; set; }//foreign key
-        //public int SAKID { get; set; } //foreign key
+        public int AOTypeID { get; set; } //foreign key   указание какого именно типа этот ОА
+        //public int SAKID { get; set; } //foreign key  привязка обьекта САУ к ОА (наверное не нужно т к обратным поиском по САУ по ИД от ОА)
         public string Notes { get; set; }  //Primechaniya
 
 
@@ -27,5 +28,7 @@ namespace ACSWeb.Models
         //----------------------------------------------------------------------
         public KS KS { get; set; } //navigation property
         public SAK SAK { get; set; } //navigation property  The child/dependent side could not be determined for the one-to-one relationship that was detected between 'GPA.SAK' and 'SAK.GPA'. To identify the child/dependent side of the relationship, configure the foreign key property. If these navigations should not be part of the same relationship configure them without specifying the inverse. See http://go.microsoft.com/fwlink/?LinkId=724062 for more details.
+        public AOType AOType { get; set; } //navigation property
+
     }
 }
