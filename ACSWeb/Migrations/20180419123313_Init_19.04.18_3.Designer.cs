@@ -11,9 +11,10 @@ using System;
 namespace ACSWeb.Migrations
 {
     [DbContext(typeof(GTSContext))]
-    partial class GTSContextModelSnapshot : ModelSnapshot
+    [Migration("20180419123313_Init_19.04.18_3")]
+    partial class Init_190418_3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
