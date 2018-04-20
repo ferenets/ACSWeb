@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using ACSWeb.Data;
 using ACSWeb.Models;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace ACSWeb.Controllers
 {
@@ -50,9 +52,60 @@ namespace ACSWeb.Controllers
         }
 
         // GET: SAK/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int? aoid, int? aotypeid)
         {
-            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name");
+            //--------------------------------Ищем ОА и берем егоимя полное
+            if (aoid != null)
+            {
+                
+                var aofullname = "";
+                var aotype = await _context.AOTypes.SingleOrDefaultAsync(t => t.ID == aotypeid);
+                if (aotype != null)
+                {
+                    switch (aotype.AOTableName)
+                    {
+                        case "GPA":
+                            var gpa = await _context.GPAs
+                                .Include(k => k.KS.LVU.UMG)
+                                //.Include(l=>l.l)
+                                .SingleOrDefaultAsync(g => g.ID == aoid);
+
+                            aofullname = gpa.Name + " | Ст.№" + gpa.StationNumber + " | " + gpa.KS.Name + " | " + gpa.KS.LVU.Name + " | " +
+                                         gpa.KS.LVU.UMG.Name;
+                            break;
+
+                        //case ""
+
+                    }
+                }
+                
+
+                ViewData["AOFULLNAME"] = aofullname;
+                
+                ViewData["AOID"] = aoid;
+            }
+            else
+            {
+                ViewData["AOID"] = 0;
+            }
+            //-----------------------------------
+            if (aotypeid != null)
+            {
+                ViewData["AOTypeID"] = aotypeid;
+            }
+            else
+            {
+                ViewData["AOTypeID"] = 0;
+            }
+            //-----------------------------------
+            
+            
+            
+            
+            
+            
+            
+            //ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name");
             ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "Name");
             ViewData["SAKTypeID"] = new SelectList(_context.SAKTypes, "ID", "Name");
             return View();

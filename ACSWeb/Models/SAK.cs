@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ACSWeb.Models
 {
@@ -12,7 +13,17 @@ namespace ACSWeb.Models
         public string Manufacturer { get; set; }  //SAS
 
         public string Seller { get; set; } //
+        
+/*        [Display(Name = "CommisioningDate")]
+        [Column("CommisioningDate", TypeName = "date")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]*/
+        
+        [Display(Name = "CommisioningDate")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime CommisioningDate { get; set; }
+        
+        
         public int AOTypeID { get; set; }  //foreign key
         public int AOID { get; set; }  //Ссылка на ИД в нужной=выбранной таблице
         public int SAKTypeID { get; set; } //foreign key

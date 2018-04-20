@@ -24,8 +24,11 @@ namespace ACSWeb.Controllers
         // GET: GPA
         public async Task<IActionResult> Index()
         {
-            var gTSContext = _context.GPAs.Include(g => g.KS).Include(aot=>aot.AOType); //
-            return View(await gTSContext.ToListAsync());
+            var gpalist = await _context.GPAs.Include(g => g.KS).Include(aot=>aot.AOType).ToListAsync(); //
+            //ViewData["CreationDateList"] = gpalist.FindAll().   ToString("YYYY.MM.dd HH:mm:ss")
+            
+            
+            return View( gpalist);
         }
 
         // GET: GPA/Details/5
