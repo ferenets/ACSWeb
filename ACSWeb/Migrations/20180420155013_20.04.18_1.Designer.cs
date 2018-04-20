@@ -11,8 +11,8 @@ using System;
 namespace ACSWeb.Migrations
 {
     [DbContext(typeof(GTSContext))]
-    [Migration("20180418210443_Init_18.04.18_1")]
-    partial class Init_180418_1
+    [Migration("20180420155013_20.04.18_1")]
+    partial class _200418_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -104,6 +104,8 @@ namespace ACSWeb.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("AOTypeID");
+
                     b.Property<DateTime>("CreationDate");
 
                     b.Property<string>("EngineName");
@@ -128,6 +130,8 @@ namespace ACSWeb.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("AOTypeID");
+
                     b.HasIndex("KSID");
 
                     b.HasIndex("SAKID");
@@ -140,6 +144,8 @@ namespace ACSWeb.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("AOTypeID");
+
                     b.Property<DateTime>("CreationDate");
 
                     b.Property<int>("LVUID");
@@ -151,6 +157,8 @@ namespace ACSWeb.Migrations
                     b.Property<string>("Notes");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("AOTypeID");
 
                     b.HasIndex("LVUID");
 
@@ -232,7 +240,7 @@ namespace ACSWeb.Migrations
 
                     b.Property<string>("Manufacturer");
 
-                    b.Property<string>("ModelName");
+                    b.Property<string>("Name");
 
                     b.Property<string>("Notes");
 
@@ -428,6 +436,11 @@ namespace ACSWeb.Migrations
 
             modelBuilder.Entity("ACSWeb.Models.GPA", b =>
                 {
+                    b.HasOne("ACSWeb.Models.AOType", "AOType")
+                        .WithMany()
+                        .HasForeignKey("AOTypeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("ACSWeb.Models.KS", "KS")
                         .WithMany("GPAList")
                         .HasForeignKey("KSID")
@@ -440,6 +453,11 @@ namespace ACSWeb.Migrations
 
             modelBuilder.Entity("ACSWeb.Models.KS", b =>
                 {
+                    b.HasOne("ACSWeb.Models.AOType", "AOType")
+                        .WithMany()
+                        .HasForeignKey("AOTypeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("ACSWeb.Models.LVU", "LVU")
                         .WithMany("KSList")
                         .HasForeignKey("LVUID")

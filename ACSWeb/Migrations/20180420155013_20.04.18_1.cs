@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ACSWeb.Migrations
 {
-    public partial class Init_180418_1 : Migration
+    public partial class _200418_1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -95,7 +95,7 @@ namespace ACSWeb.Migrations
                     CreationDate = table.Column<DateTime>(nullable: false),
                     LastEditDate = table.Column<DateTime>(nullable: false),
                     Manufacturer = table.Column<string>(nullable: true),
-                    ModelName = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
                     Notes = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -313,6 +313,7 @@ namespace ACSWeb.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    AOTypeID = table.Column<int>(nullable: false),
                     CreationDate = table.Column<DateTime>(nullable: false),
                     LVUID = table.Column<int>(nullable: false),
                     LastEditDate = table.Column<DateTime>(nullable: false),
@@ -322,6 +323,12 @@ namespace ACSWeb.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_KS", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_KS_AOType_AOTypeID",
+                        column: x => x.AOTypeID,
+                        principalTable: "AOType",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_KS_LVU_LVUID",
                         column: x => x.LVUID,
@@ -336,6 +343,7 @@ namespace ACSWeb.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    AOTypeID = table.Column<int>(nullable: false),
                     CreationDate = table.Column<DateTime>(nullable: false),
                     EngineName = table.Column<string>(nullable: true),
                     EngineType = table.Column<string>(nullable: true),
@@ -351,6 +359,12 @@ namespace ACSWeb.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GPA", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_GPA_AOType_AOTypeID",
+                        column: x => x.AOTypeID,
+                        principalTable: "AOType",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_GPA_KS_KSID",
                         column: x => x.KSID,
@@ -431,6 +445,11 @@ namespace ACSWeb.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_GPA_AOTypeID",
+                table: "GPA",
+                column: "AOTypeID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GPA_KSID",
                 table: "GPA",
                 column: "KSID");
@@ -439,6 +458,11 @@ namespace ACSWeb.Migrations
                 name: "IX_GPA_SAKID",
                 table: "GPA",
                 column: "SAKID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_KS_AOTypeID",
+                table: "KS",
+                column: "AOTypeID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_KS_LVUID",
@@ -515,13 +539,13 @@ namespace ACSWeb.Migrations
                 name: "Pipeline");
 
             migrationBuilder.DropTable(
-                name: "AOType");
-
-            migrationBuilder.DropTable(
                 name: "PLC");
 
             migrationBuilder.DropTable(
                 name: "SAKType");
+
+            migrationBuilder.DropTable(
+                name: "AOType");
 
             migrationBuilder.DropTable(
                 name: "LVU");

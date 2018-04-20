@@ -24,7 +24,7 @@ namespace ACSWeb.Controllers
         // GET: KS
         public async Task<IActionResult> Index()
         {
-            var gTSContext = _context.KSs.Include(k => k.LVU);
+            var gTSContext = _context.KSs.Include(k => k.AOType).Include(k => k.LVU);
             return View(await gTSContext.ToListAsync());
         }
 
@@ -37,30 +37,14 @@ namespace ACSWeb.Controllers
             }
 
             var kS = await _context.KSs
+                .Include(k => k.AOType)
                 .Include(k => k.LVU)
-                .Include(pl=>pl.PipelineList)
-                //.A Include(_context.Pipelines)
-
-                //.Join(_context.KSPipeline, k=>k.PipelineList, p=>p.PipelineID,
-                //(p, k) => new // результат
-                //{
-                //    PipelineName = p. Pipeline.Name,
-                //    KSName = k.KS.Name,
-                //}
-
-                //))
-                //.Join(_context.Pipelines, p=>p.PipelineList.Join , )
-
+                .Include(pl => pl.PipelineList)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (kS == null)
             {
                 return NotFound();
             }
-
-            //ViewData["PipelinesList"] = await _context.KSPipeline 
-            //       .Include(p=>p.Pipeline)            
-            //       .AllAsync(m=>m.KSID == id);
-
 
             return View(kS);
         }
@@ -68,6 +52,7 @@ namespace ACSWeb.Controllers
         // GET: KS/Create
         public IActionResult Create()
         {
+            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name");
             ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "Name");
             return View();
         }
@@ -77,7 +62,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,LVUID,Notes")] KS kS)
+        public async Task<IActionResult> Create([Bind("ID,Name,LVUID,AOTypeID,Notes")] KS kS)
         {
             if (ModelState.IsValid)
             {
@@ -87,6 +72,7 @@ namespace ACSWeb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", kS.AOTypeID);
             ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "Name", kS.LVUID);
             return View(kS);
         }
@@ -104,6 +90,7 @@ namespace ACSWeb.Controllers
             {
                 return NotFound();
             }
+            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", kS.AOTypeID);
             ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "Name", kS.LVUID);
             return View(kS);
         }
@@ -113,7 +100,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,LVUID,Notes,CreationDate")] KS kS)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,LVUID,AOTypeID,Notes,CreationDate")] KS kS)
         {
             if (id != kS.ID)
             {
@@ -142,6 +129,7 @@ namespace ACSWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", kS.AOTypeID);
             ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "Name", kS.LVUID);
             return View(kS);
         }
@@ -155,6 +143,7 @@ namespace ACSWeb.Controllers
             }
 
             var kS = await _context.KSs
+                .Include(k => k.AOType)
                 .Include(k => k.LVU)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (kS == null)

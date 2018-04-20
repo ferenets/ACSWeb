@@ -129,6 +129,8 @@ namespace ACSWeb.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("AOTypeID");
+
                     b.HasIndex("KSID");
 
                     b.HasIndex("SAKID");
@@ -154,6 +156,8 @@ namespace ACSWeb.Migrations
                     b.Property<string>("Notes");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("AOTypeID");
 
                     b.HasIndex("LVUID");
 
@@ -431,6 +435,11 @@ namespace ACSWeb.Migrations
 
             modelBuilder.Entity("ACSWeb.Models.GPA", b =>
                 {
+                    b.HasOne("ACSWeb.Models.AOType", "AOType")
+                        .WithMany()
+                        .HasForeignKey("AOTypeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("ACSWeb.Models.KS", "KS")
                         .WithMany("GPAList")
                         .HasForeignKey("KSID")
@@ -443,6 +452,11 @@ namespace ACSWeb.Migrations
 
             modelBuilder.Entity("ACSWeb.Models.KS", b =>
                 {
+                    b.HasOne("ACSWeb.Models.AOType", "AOType")
+                        .WithMany()
+                        .HasForeignKey("AOTypeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("ACSWeb.Models.LVU", "LVU")
                         .WithMany("KSList")
                         .HasForeignKey("LVUID")

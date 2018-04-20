@@ -35,33 +35,17 @@
             @Html.DisplayFor(model => model.LastEditDate)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.AOType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AOType.ID)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.LVU)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.LVU.Name)
+            @Html.DisplayFor(model => model.LVU.ID)
         </dd>
-        <dt>
-            Газопроводи
-        </dt>
- 
-@*foreach (var item in ViewData["PipelinesList"])
-{
-            <td>
-                Nazva
-            </td>
-            <dd>
-                @item.Name    @*Html.DisplayFor(item => item.PipelineList. Pipeline.)
-            </dd>
-
-      
-}*@
-
-
-
-
-
-            @*Html.DisplayFor(model => model.PipelineList.Name)*@
-
     </dl>
 </div>
 <div>
