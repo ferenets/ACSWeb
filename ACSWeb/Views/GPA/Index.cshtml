@@ -30,12 +30,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.StationNumber)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.CreationDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LastEditDate)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Notes)
             </th>
@@ -69,12 +69,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.StationNumber)
             </td>
-            <td>
+            @*<td>
                 @item.CreationDate.ToString("dd.MM.yyyy HH:mm:ss")   
             </td>
             <td>
                 @item.LastEditDate.ToString("dd.MM.yyyy HH:mm:ss")
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Notes)
             </td>

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ACSWeb.Migrations
 {
-    public partial class _200418_1 : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -318,7 +318,8 @@ namespace ACSWeb.Migrations
                     LVUID = table.Column<int>(nullable: false),
                     LastEditDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Notes = table.Column<string>(nullable: true)
+                    Notes = table.Column<string>(nullable: true),
+                    ShortCompShopName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -345,6 +346,7 @@ namespace ACSWeb.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     AOTypeID = table.Column<int>(nullable: false),
                     CreationDate = table.Column<DateTime>(nullable: false),
+                    EngineManufacturer = table.Column<string>(nullable: true),
                     EngineName = table.Column<string>(nullable: true),
                     EngineType = table.Column<string>(nullable: true),
                     KSID = table.Column<int>(nullable: false),
@@ -354,6 +356,7 @@ namespace ACSWeb.Migrations
                     Power = table.Column<float>(nullable: false),
                     SAKID = table.Column<int>(nullable: true),
                     StationNumber = table.Column<int>(nullable: false),
+                    VCNManufacturer = table.Column<string>(nullable: true),
                     VCNName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

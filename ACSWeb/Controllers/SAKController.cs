@@ -52,19 +52,19 @@ namespace ACSWeb.Controllers
         }
 
         // GET: SAK/Create
-        public async Task<IActionResult> Create(int? aoid, int? aotypeid)
+        public async Task<IActionResult> Create(int aoid, int aotypeid)
         {
-            //--------------------------------Ищем ОА и берем егоимя полное
+            //--------------------------------Ищем ОА и берем его имя полное
             if (aoid != null)
             {
                 
                 var aofullname = "";
-                var aotype = await _context.AOTypes.SingleOrDefaultAsync(t => t.ID == aotypeid);
+                var aotype = await _context.AOTypes.SingleOrDefaultAsync(t => t.ID == aotypeid); //Ищем тип ОА, НЕ ИМЯ,а именно "тип"
                 if (aotype != null)
                 {
                     switch (aotype.AOTableName)
                     {
-                        case "GPA":
+                        case "GPA": //Если имя таблицы == GPA, то ищем ОА типа ГПА
                             var gpa = await _context.GPAs
                                 .Include(k => k.KS.LVU.UMG)
                                 //.Include(l=>l.l)
@@ -76,38 +76,36 @@ namespace ACSWeb.Controllers
 
                         //case ""
 
-                    }
+                    };
+
+                    ViewData["AOTypeID"] = aotypeid;
+
                 }
-                
+                else
+                {
+                    ViewData["AOTypeID"] = 0;
+                }
 
                 ViewData["AOFULLNAME"] = aofullname;
                 
                 ViewData["AOID"] = aoid;
+
+                ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "Name");
+                ViewData["SAKTypeID"] = new SelectList(_context.SAKTypes, "ID", "Name");
             }
             else
             {
                 ViewData["AOID"] = 0;
             }
             //-----------------------------------
-            if (aotypeid != null)
-            {
-                ViewData["AOTypeID"] = aotypeid;
-            }
-            else
-            {
-                ViewData["AOTypeID"] = 0;
-            }
+
             //-----------------------------------
             
             
-            
-            
-            
-            
-            
             //ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name");
-            ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "Name");
-            ViewData["SAKTypeID"] = new SelectList(_context.SAKTypes, "ID", "Name");
+
+
+
             return View();
         }
 
@@ -116,11 +114,16 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,PLCID,Manufacturer,Seller,CommisioningDate,AOTypeID,AOID,SAKTypeID,Notes")] SAK sAK)
+        public async Task<IActionResult> Create(/*int AOID,*/[Bind("ID,Name,PLCID,Manufacturer,Seller,CommisioningDate,AOTypeID,AOID,SAKTypeID,Notes")] SAK sAK)
         {
+            //var test = ModelBinderAttribute.GetCustomAttribute(AOTypeID, int);
+            
+
             if (ModelState.IsValid)
             {
                 sAK.CreationDate = DateTime.Now;
+                //sAK.AOType = await _context.AOTypes.SingleOrDefaultAsync(t => t.ID == sAK.AOTypeID); //Ищем тип ОА, НЕ ID,а именно "тип"
+                //sAK.AOID = AOID;
 
                 _context.Add(sAK);
                 await _context.SaveChangesAsync();
@@ -168,7 +171,7 @@ namespace ACSWeb.Controllers
                 try
                 {
                     sAK.LastEditDate = DateTime.Now;
-
+                   
                     _context.Update(sAK);
                     await _context.SaveChangesAsync();
                 }
@@ -185,7 +188,8 @@ namespace ACSWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", sAK.AOTypeID);
+            //ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", sAK.AOTypeID);
+            //var f = AOType
             ViewData["PLCID"] = new SelectList(_context.PLCs, "ID", "Name", sAK.PLCID);
             ViewData["SAKTypeID"] = new SelectList(_context.SAKTypes, "ID", "Name", sAK.SAKTypeID);
             return View(sAK);
@@ -200,7 +204,7 @@ namespace ACSWeb.Controllers
             }
 
             var sAK = await _context.SAKs
-                .Include(s => s.AOType)
+                //.Include(s => s.AOType)
                 .Include(s => s.PLC)
                 .Include(s => s.SAKType)
                 .SingleOrDefaultAsync(m => m.ID == id);

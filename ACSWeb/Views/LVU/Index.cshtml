@@ -18,12 +18,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Notes)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.CreationDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LastEditDate)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.UMG)
             </th>
@@ -40,14 +40,14 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Notes)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreationDate)
+                @*<td>
+                    @item.CreationDate.ToString("dd.MM.yyyy HH:mm:ss")
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LastEditDate)
-                </td>
+                    @item.LastEditDate.ToString("dd.MM.yyyy HH:mm:ss")
+                </td>*@
                 <td>
-                    @Html.DisplayFor(modelItem => item.UMG.ID)
+                    @Html.DisplayFor(modelItem => item.UMG.ShortName)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

@@ -50,10 +50,27 @@ namespace ACSWeb.Controllers
         }
 
         // GET: KS/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name");
             ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "Name");
+
+            var aotype = await _context.AOTypes.SingleOrDefaultAsync(t => t.AOTableName == "KS"); //Ищем тип ОА, НЕ ИМЯ,а именно "тип"
+            
+            if (aotype != null)
+            {
+                ViewData["AOTypeID"] = aotype.ID;
+            }
+            else    
+            {
+                ModelState.AddModelError(string.Empty, "Такий тип об'єкту автоматизації відсутній.");
+                return View();
+            }
+
+
+
+
+
+            
             return View();
         }
 
@@ -62,8 +79,31 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,LVUID,AOTypeID,Notes")] KS kS)
+        public async Task<IActionResult> Create([Bind("ID,Name,ShortCompShopName,LVUID,AOTypeID,Notes")] KS kS)
         {
+
+            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", kS.AOTypeID);
+            
+            //var aotype = await _context.AOTypes.SingleOrDefaultAsync(t => t.AOTableName == "KS"); //Ищем тип ОА, НЕ ИМЯ,а именно "тип"
+
+            //if (aotype != null)
+            //{
+            //    ViewData["AOTypeID"] = aotype.ID;
+            //    kS.AOType = aotype;
+
+            //}
+            //else
+            //{
+            //    ModelState.AddModelError(string.Empty, "Такий тип об'єкту автоматизації відсутній.");
+            //    return View();
+            //}
+            //------------------------------------------------------------------------------
+            ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "Name", kS.LVUID);
+
+
+
+
+
             if (ModelState.IsValid)
             {
                 kS.CreationDate = DateTime.Now;
@@ -72,8 +112,8 @@ namespace ACSWeb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", kS.AOTypeID);
-            ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "Name", kS.LVUID);
+
+
             return View(kS);
         }
 
@@ -85,12 +125,28 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            var kS = await _context.KSs.SingleOrDefaultAsync(m => m.ID == id);
+            var kS = await _context.KSs.Include(k => k.AOType).SingleOrDefaultAsync(m => m.ID == id);
             if (kS == null)
             {
                 return NotFound();
             }
-            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", kS.AOTypeID);
+            //--------------------------------------------------------------------------------------------
+            //var aotype = await _context.AOTypes.SingleOrDefaultAsync(t => t.AOTableName == "KS"); //Ищем тип ОА, НЕ ИМЯ,а именно "тип"
+
+            //if (aotype != null)
+            //{
+            //    ViewData["AOTypeID"] = aotype.ID;
+            //    //kS.AOType = aotype;
+            //}
+            //else
+            //{
+            //    ModelState.AddModelError(string.Empty, "Такий тип об'єкту автоматизації відсутній.");
+            //    return View();
+            //}
+            //-------------------------------------------------------------------------------------------------
+
+
+            ViewData["AOTypeID"] = kS.AOType.ID;
             ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "Name", kS.LVUID);
             return View(kS);
         }
@@ -100,12 +156,27 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,LVUID,AOTypeID,Notes,CreationDate")] KS kS)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ShortCompShopName,LVUID,AOTypeID,Notes,CreationDate")] KS kS)
         {
             if (id != kS.ID)
             {
                 return NotFound();
             }
+
+            //--------------------------------------------------------------------------------------------
+            var aotype = await _context.AOTypes.SingleOrDefaultAsync(t => t.AOTableName == "KS"); //Ищем тип ОА, НЕ ИМЯ,а именно "тип"
+
+            if (aotype != null)
+            {
+                ViewData["AOTypeID"] = aotype.ID;
+                kS.AOType = aotype;
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Такий тип об'єкту автоматизації відсутній.");
+                return View();
+            }
+            //-------------------------------------------------------------------------------------------------
 
             if (ModelState.IsValid)
             {
@@ -120,7 +191,8 @@ namespace ACSWeb.Controllers
                 {
                     if (!KSExists(kS.ID))
                     {
-                        return NotFound();
+                        ModelState.AddModelError(string.Empty, "КС з таким ID вже існує.");
+                        return View();
                     }
                     else
                     {
@@ -129,7 +201,7 @@ namespace ACSWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", kS.AOTypeID);
+            
             ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "Name", kS.LVUID);
             return View(kS);
         }

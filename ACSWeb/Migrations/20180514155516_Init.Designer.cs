@@ -11,9 +11,10 @@ using System;
 namespace ACSWeb.Migrations
 {
     [DbContext(typeof(GTSContext))]
-    partial class GTSContextModelSnapshot : ModelSnapshot
+    [Migration("20180514155516_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -283,6 +284,8 @@ namespace ACSWeb.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("AOTypeID");
+
                     b.HasIndex("PLCID");
 
                     b.HasIndex("SAKTypeID");
@@ -490,6 +493,11 @@ namespace ACSWeb.Migrations
 
             modelBuilder.Entity("ACSWeb.Models.SAK", b =>
                 {
+                    b.HasOne("ACSWeb.Models.AOType", "AOType")
+                        .WithMany()
+                        .HasForeignKey("AOTypeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("ACSWeb.Models.PLC", "PLC")
                         .WithMany()
                         .HasForeignKey("PLCID")

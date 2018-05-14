@@ -6,13 +6,15 @@ namespace ACSWeb.Models
     public class GPA
     {
         public int ID { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; }//ГТК-10І
         public float Power { get; set; } //MW
         public string EngineType { get; set; } //ГТД
+        public string EngineManufacturer { get; set; } //ЗОРЯ-МАШПРОЕКТ
         public string EngineName { get; set; } //ДГ-90Л2
+        public string VCNManufacturer { get; set; } //Сумське НПО
         public string VCNName { get; set; } //650-22-2
         public int StationNumber { get; set; }
-        //public string CompShopName { get; set; } КС прирівнюмо до КЦ
+        //public string CompShopName { get; set; } КС прирівнюмо до КЦ. Наприклад Шебелинка-1, Шебелинка-2
         //-------
         public DateTime CreationDate { get; set; }
         public DateTime LastEditDate { get; set; }

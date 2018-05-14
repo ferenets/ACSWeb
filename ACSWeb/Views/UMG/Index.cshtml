@@ -49,10 +49,10 @@
                 @Html.DisplayFor(modelItem => item.Notes)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreationDate)
+                @item.CreationDate.ToString("dd.MM.yyyy HH:mm:ss")
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LastEditDate)
+                @item.LastEditDate.ToString("dd.MM.yyyy HH:mm:ss")
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

@@ -11,15 +11,15 @@ using System;
 namespace ACSWeb.Migrations
 {
     [DbContext(typeof(GTSContext))]
-    [Migration("20180420155013_20.04.18_1")]
-    partial class _200418_1
+    [Migration("20180514185234_Init-3")]
+    partial class Init3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011");
+                .HasAnnotation("ProductVersion", "2.0.3-rtm-10026");
 
             modelBuilder.Entity("ACSWeb.Models.AOType", b =>
                 {
@@ -108,6 +108,8 @@ namespace ACSWeb.Migrations
 
                     b.Property<DateTime>("CreationDate");
 
+                    b.Property<string>("EngineManufacturer");
+
                     b.Property<string>("EngineName");
 
                     b.Property<string>("EngineType");
@@ -125,6 +127,8 @@ namespace ACSWeb.Migrations
                     b.Property<int?>("SAKID");
 
                     b.Property<int>("StationNumber");
+
+                    b.Property<string>("VCNManufacturer");
 
                     b.Property<string>("VCNName");
 
@@ -155,6 +159,8 @@ namespace ACSWeb.Migrations
                     b.Property<string>("Name");
 
                     b.Property<string>("Notes");
+
+                    b.Property<string>("ShortCompShopName");
 
                     b.HasKey("ID");
 
@@ -277,8 +283,6 @@ namespace ACSWeb.Migrations
                     b.Property<string>("Seller");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("AOTypeID");
 
                     b.HasIndex("PLCID");
 
@@ -487,11 +491,6 @@ namespace ACSWeb.Migrations
 
             modelBuilder.Entity("ACSWeb.Models.SAK", b =>
                 {
-                    b.HasOne("ACSWeb.Models.AOType", "AOType")
-                        .WithMany()
-                        .HasForeignKey("AOTypeID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("ACSWeb.Models.PLC", "PLC")
                         .WithMany()
                         .HasForeignKey("PLCID")

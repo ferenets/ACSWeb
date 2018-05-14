@@ -56,7 +56,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Manufacturer,ModelName,Notes")] PLC pLC)
+        public async Task<IActionResult> Create([Bind("ID,Manufacturer,Name,Notes")] PLC pLC)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Manufacturer,ModelName,Notes,CreationDate")] PLC pLC)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Manufacturer,Name,Notes,CreationDate")] PLC pLC)
         {
             if (id != pLC.ID)
             {

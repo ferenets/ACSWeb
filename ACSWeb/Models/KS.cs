@@ -6,7 +6,8 @@ namespace ACSWeb.Models
     public class KS
     {
         public int ID { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } //Шебелинка-1
+        public string ShortCompShopName { get; set; }//Ц081
         public int LVUID { get; set; }  //foreign key
         public int AOTypeID { get; set; } //foreign key
         //public int SAKID { get; set; } //foreign key  привязка обьекта САУ к ОА

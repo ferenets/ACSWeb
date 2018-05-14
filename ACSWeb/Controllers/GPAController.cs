@@ -25,8 +25,7 @@ namespace ACSWeb.Controllers
         public async Task<IActionResult> Index()
         {
             var gpalist = await _context.GPAs.Include(g => g.KS).Include(aot=>aot.AOType).ToListAsync(); //
-            //ViewData["CreationDateList"] = gpalist.FindAll().   ToString("YYYY.MM.dd HH:mm:ss")
-            
+                 
             
             return View( gpalist);
         }
@@ -61,10 +60,23 @@ namespace ACSWeb.Controllers
         }
 
         // GET: GPA/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var aotype = await _context.AOTypes.SingleOrDefaultAsync(t => t.AOTableName == "GPA"); //Ищем тип ОА, НЕ ИМЯ,а именно "тип"
+
+            if (aotype != null)
+            {
+                ViewData["AOTypeID"] = aotype.ID;
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Такий тип об'єкту автоматизації відсутній.");
+                return View();
+            }
+
+
             ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name");
-            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name");
+
             return View();
         }
 
@@ -75,6 +87,23 @@ namespace ACSWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Name,Power,EngineType,EngineName,VCNName,StationNumber,KSID,AOTypeID,Notes")] GPA gPA)
         {
+            var aotype = await _context.AOTypes.SingleOrDefaultAsync(t => t.AOTableName == "GPA"); //Ищем тип ОА, НЕ ИМЯ,а именно "тип"
+
+            if (aotype != null)
+            {
+                ViewData["AOTypeID"] = aotype.ID;
+                gPA.AOType = aotype;
+
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Такий тип об'єкту автоматизації відсутній.");
+                return View();
+            }
+            
+            ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name", gPA.KSID);
+
+            //-------ЗАПИСЬ в БД
             if (ModelState.IsValid)
             {
                 gPA.CreationDate = DateTime.Now;
@@ -83,8 +112,8 @@ namespace ACSWeb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name", gPA.KSID);
-            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", gPA.AOTypeID);
+            //------------------------
+
 
             return View(gPA);
         }
@@ -102,7 +131,24 @@ namespace ACSWeb.Controllers
             {
                 return NotFound();
             }
+
+            //--------------------------------------------------------------------------------------------
+            var aotype = await _context.AOTypes.SingleOrDefaultAsync(t => t.AOTableName == "GPA"); //Ищем тип ОА, НЕ ИМЯ,а именно "тип"
+
+            if (aotype != null)
+            {
+                ViewData["AOTypeID"] = aotype.ID;
+                gPA.AOType = aotype;
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Такий тип об'єкту автоматизації відсутній.");
+                return View();
+            }
+            //-------------------------------------------------------------------------------------------------
+
             ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name", gPA.KSID);
+
             return View(gPA);
         }
 
@@ -111,13 +157,28 @@ namespace ACSWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Power,EngineType,EngineName,VCNName,StationNumber,CreationDate,KSID,Notes")] GPA gPA)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Power,EngineType,EngineName,VCNName,StationNumber,AOTypeID,CreationDate,KSID,Notes")] GPA gPA)
         {
             if (id != gPA.ID)
             {
                 return NotFound();
             }
 
+            //--------------------------------------------------------------------------------------------
+            var aotype = await _context.AOTypes.SingleOrDefaultAsync(t => t.AOTableName == "GPA"); //Ищем тип ОА, НЕ ИМЯ,а именно "тип"
+
+            if (aotype != null)
+            {
+                ViewData["AOTypeID"] = aotype.ID;
+                gPA.AOType = aotype;
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Такий тип об'єкту автоматизації відсутній.");
+                return View();
+            }
+            //-------------------------------------------------------------------------------------------------
+                        
             if (ModelState.IsValid)
             {
                 try
