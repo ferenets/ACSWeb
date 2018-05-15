@@ -35,7 +35,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="CommisioningDate" class="control-label"></label>
-                <input asp-for="CommisioningDate" class="form-control" />
+                <input asp-for="CommisioningDate" class="form-control" value="@ViewBag.CommisDate.ToString("yyyy-MM-dd")"/>
                 <span asp-validation-for="CommisioningDate" class="text-danger"></span>
             </div>
             <div class="form-group">

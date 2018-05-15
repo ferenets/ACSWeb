@@ -62,7 +62,7 @@ namespace ACSWeb.Controllers
             }
             else    
             {
-                ModelState.AddModelError(string.Empty, "Такий тип об'єкту автоматизації відсутній.");
+                ModelState.AddModelError(string.Empty, "Такий (KS)тип об'єкту автоматизації відсутній.");
                 return View();
             }
 
@@ -130,24 +130,11 @@ namespace ACSWeb.Controllers
             {
                 return NotFound();
             }
-            //--------------------------------------------------------------------------------------------
-            //var aotype = await _context.AOTypes.SingleOrDefaultAsync(t => t.AOTableName == "KS"); //Ищем тип ОА, НЕ ИМЯ,а именно "тип"
-
-            //if (aotype != null)
-            //{
-            //    ViewData["AOTypeID"] = aotype.ID;
-            //    //kS.AOType = aotype;
-            //}
-            //else
-            //{
-            //    ModelState.AddModelError(string.Empty, "Такий тип об'єкту автоматизації відсутній.");
-            //    return View();
-            //}
-            //-------------------------------------------------------------------------------------------------
-
 
             ViewData["AOTypeID"] = kS.AOType.ID;
+
             ViewData["LVUID"] = new SelectList(_context.LVUs, "ID", "Name", kS.LVUID);
+
             return View(kS);
         }
 
@@ -163,20 +150,6 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            //--------------------------------------------------------------------------------------------
-            var aotype = await _context.AOTypes.SingleOrDefaultAsync(t => t.AOTableName == "KS"); //Ищем тип ОА, НЕ ИМЯ,а именно "тип"
-
-            if (aotype != null)
-            {
-                ViewData["AOTypeID"] = aotype.ID;
-                kS.AOType = aotype;
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Такий тип об'єкту автоматизації відсутній.");
-                return View();
-            }
-            //-------------------------------------------------------------------------------------------------
 
             if (ModelState.IsValid)
             {

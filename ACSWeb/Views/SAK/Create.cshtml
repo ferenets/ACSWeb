@@ -38,23 +38,19 @@
             <div class="form-group">
                 <label asp-for="CommisioningDate" class="control-label"></label>
                 
-                <input asp-for="CommisioningDate" class="form-control" />
+                <input asp-for="CommisioningDate" class="form-control"/>
                 <span asp-validation-for="CommisioningDate" class="text-danger"></span>
             </div>
-            @*---------------------------------------------------------------------------*@
 
 
-            
-            
-            
-            @*-------------------------------------------------------------------------*@
+
             <div class="form-group" @*hidden=""*@>
                 <label asp-for="AOTypeID" class="control-label"></label>
-                <input asp-for="AOTypeID" class ="form-control" value="@ViewBag.AOTypeID" @*disabled=""*@/>
+                <input asp-for="AOTypeID" class ="form-control" value="@ViewBag.AOTypeID"/>
             </div>
             <div class="form-group" @*hidden=""*@>
                 <label asp-for="AOID" class="control-label"></label>
-                <input asp-for="AOID" class="form-control" value="@ViewBag.AOID" @*disabled=""*@/>
+                <input asp-for="AOID" class="form-control" value="@ViewBag.AOID"/>
                 <span asp-validation-for="AOID" class="text-danger"></span>
             </div>
             <div class="form-group">

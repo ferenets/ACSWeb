@@ -87,20 +87,9 @@ namespace ACSWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Name,Power,EngineType,EngineName,VCNName,StationNumber,KSID,AOTypeID,Notes")] GPA gPA)
         {
-            var aotype = await _context.AOTypes.SingleOrDefaultAsync(t => t.AOTableName == "GPA"); //Ищем тип ОА, НЕ ИМЯ,а именно "тип"
 
-            if (aotype != null)
-            {
-                ViewData["AOTypeID"] = aotype.ID;
-                gPA.AOType = aotype;
+            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", gPA.AOTypeID);
 
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Такий тип об'єкту автоматизації відсутній.");
-                return View();
-            }
-            
             ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name", gPA.KSID);
 
             //-------ЗАПИСЬ в БД
@@ -132,20 +121,8 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            //--------------------------------------------------------------------------------------------
-            var aotype = await _context.AOTypes.SingleOrDefaultAsync(t => t.AOTableName == "GPA"); //Ищем тип ОА, НЕ ИМЯ,а именно "тип"
 
-            if (aotype != null)
-            {
-                ViewData["AOTypeID"] = aotype.ID;
-                gPA.AOType = aotype;
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Такий тип об'єкту автоматизації відсутній.");
-                return View();
-            }
-            //-------------------------------------------------------------------------------------------------
+            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", gPA.AOTypeID);
 
             ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name", gPA.KSID);
 
@@ -164,21 +141,6 @@ namespace ACSWeb.Controllers
                 return NotFound();
             }
 
-            //--------------------------------------------------------------------------------------------
-            var aotype = await _context.AOTypes.SingleOrDefaultAsync(t => t.AOTableName == "GPA"); //Ищем тип ОА, НЕ ИМЯ,а именно "тип"
-
-            if (aotype != null)
-            {
-                ViewData["AOTypeID"] = aotype.ID;
-                gPA.AOType = aotype;
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Такий тип об'єкту автоматизації відсутній.");
-                return View();
-            }
-            //-------------------------------------------------------------------------------------------------
-                        
             if (ModelState.IsValid)
             {
                 try
@@ -201,6 +163,9 @@ namespace ACSWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewData["AOTypeID"] = new SelectList(_context.AOTypes, "ID", "Name", gPA.AOTypeID);
+
             ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name", gPA.KSID);
             return View(gPA);
         }

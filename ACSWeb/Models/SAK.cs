@@ -14,7 +14,7 @@ namespace ACSWeb.Models
 
         public string Seller { get; set; } //
         
-/*        [Display(Name = "CommisioningDate")]
+/*      [Display(Name = "CommisioningDate")]
         [Column("CommisioningDate", TypeName = "date")]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]*/
         

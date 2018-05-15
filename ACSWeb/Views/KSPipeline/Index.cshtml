@@ -12,15 +12,18 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.CreationDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LastEditDate)
-                </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastEditDate)
+        </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.KS)
             </th>
+
+            <th></th>
+
             <th>
                 @Html.DisplayNameFor(model => model.Pipeline)
             </th>
@@ -30,17 +33,21 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.CreationDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastEditDate)
+        </td>*@
+
             <td>
-                @Html.DisplayFor(modelItem => item.CreationDate)
+                @Html.DisplayFor(modelItem => item.KS.Name)
             </td>
+
+            <td>-</td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.LastEditDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.KS.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pipeline.ID)
+                @Html.DisplayFor(modelItem => item.Pipeline.ShortName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
