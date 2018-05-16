@@ -12,13 +12,15 @@ using ACSWeb.Data;
 using ACSWeb.Models;
 using ACSWeb.Services;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc;
 
 //using Npgsql.EntityFrameworkCore.PostgreSQL не требуется здесь
 
 
 namespace ACSWeb
 {
-    public class Startup
+    public class Startup /*: IDesignTimeMvcBuilderConfiguration*/
     {
         public Startup(IConfiguration configuration)
         {
