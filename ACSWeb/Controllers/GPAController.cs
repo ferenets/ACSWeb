@@ -122,7 +122,7 @@ namespace ACSWeb.Controllers
             }
 
 
-            ViewData["AOTypeID"] = gPA.AOTypeID ;
+            ViewData["AOTypeID"] = gPA.AOTypeID;
 
             ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name", gPA.KSID);
 
@@ -164,7 +164,7 @@ namespace ACSWeb.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["AOTypeID"] = gPA.AOTypeID;
+            ViewData["AOTypeID"] = gPA.AOTypeID ;
 
             ViewData["KSID"] = new SelectList(_context.KSs, "ID", "Name", gPA.KSID);
             return View(gPA);
