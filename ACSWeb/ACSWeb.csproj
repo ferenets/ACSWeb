@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <UserSecretsId>aspnet-ACSWeb-3D33E8C7-4EBA-4C1A-B953-C9620D8CE909</UserSecretsId>
+    <MvcRazorCompileOnPublish>true</MvcRazorCompileOnPublish>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Properties\PublishProfiles\FolderProfile1.pubxml" />
@@ -9,6 +10,9 @@
   <ItemGroup>
     <PackageReference Include="BundlerMinifier.Core" Version="2.8.391" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0-rc1-final" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.ViewCompilation" Version="2.1.0-rc1-final" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.ViewCompilation.Design" Version="1.1.0-preview4-final" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.ViewCompilation.Tools" Version="1.1.0-preview4-final" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.0-rc1-final" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0-rc1-final" PrivateAssets="All" />
     <PackageReference Include="Moment.js" Version="2.22.1" />
