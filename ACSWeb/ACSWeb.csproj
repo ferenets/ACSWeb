@@ -9,21 +9,19 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BundlerMinifier.Core" Version="2.8.391" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0-rc1-final" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.ViewCompilation" Version="2.1.0-rc1-final" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.ViewCompilation.Design" Version="1.1.0-preview4-final" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.ViewCompilation.Tools" Version="1.1.0-preview4-final" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.0-rc1-final" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0-rc1-final" PrivateAssets="All" />
-    <PackageReference Include="Moment.js" Version="2.22.1" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.0-rc1" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.ViewCompilation" Version="2.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" PrivateAssets="All" />
+    <PackageReference Include="Moment.js" Version="2.22.2" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.0" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="Microsoft.NETCore.App" Version="2.1.0-rc1" />
+    <!--<PackageReference Update="Microsoft.NETCore.App" Version="2.1.0" />-->
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
